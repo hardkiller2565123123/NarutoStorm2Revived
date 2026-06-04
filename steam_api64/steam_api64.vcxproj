@@ -178,6 +178,7 @@
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="ModLoader.h" />
     <ClInclude Include="NetworkHooks.h" />
+    <ClInclude Include="NS2Config.h" />
     <ClInclude Include="sdk_includes\isteamapplist.h" />
     <ClInclude Include="sdk_includes\isteamapps.h" />
     <ClInclude Include="sdk_includes\isteamapps001.h" />
@@ -413,6 +414,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="ModLoader.cpp" />
     <ClCompile Include="NetworkHooks.cpp" />
+    <ClCompile Include="NS2Config.cpp" />
     <ClCompile Include="SteamAuth.cpp" />
     <ClCompile Include="SteamCallbackManager.cpp" />
     <ClCompile Include="SteamCallResultManager.cpp" />

@@ -38,6 +38,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{5d00edb2-0519-41f2-8536-692122514365}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Config">
+      <UniqueIdentifier>{b1892807-5f45-4125-97e4-1369ac57765d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -147,7 +150,10 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>imgui</Filter>
+      <Filter>Core\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="NS2Config.cpp">
+      <Filter>Core\Config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -838,6 +844,9 @@
     </ClInclude>
     <ClInclude Include="imstb_truetype.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="NS2Config.h">
+      <Filter>Core\Config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

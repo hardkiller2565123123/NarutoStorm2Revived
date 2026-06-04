@@ -86,7 +86,7 @@ bool Logger::Init()
     g_LoggerInitialized = true;
 
     std::string gameDir = GetGameDirectory();
-    std::string logsDir = gameDir + "logs";
+    std::string logsDir = gameDir + "NartuoStorm2Revived\\Logs";
 
     CreateDirectoryA(logsDir.c_str(), nullptr);
 

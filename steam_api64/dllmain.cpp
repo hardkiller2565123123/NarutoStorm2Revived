@@ -20,6 +20,7 @@
 #include "SteamPersonaManager.h"
 #include "SteamStorageLocal.h"
 #include "SteamStatsLocal.h"
+#include "NS2Config.h"
 
 static HANDLE g_MainThread = nullptr;
 
@@ -53,6 +54,7 @@ static DWORD WINAPI MainThread(LPVOID)
     SteamPersonaManager::Init();
     SteamStorageLocal::Init();
     SteamStatsLocal::Init();
+    NS2Config::Init();
 
     SteamFactoryRegistry::Dump();
 
