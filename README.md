@@ -135,7 +135,7 @@ Potential future improvements include:
 * Expanded Modding Framework
 * Plugin Support
 * Community Resource Integration
-* 
+  
 ---
 
 # Current Development Status
