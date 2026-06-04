@@ -131,10 +131,6 @@ All content is reviewed and maintained by the project owner.
 
 If you do not approve of AI-assisted development, you are free not to use or contribute to this project.
 
-The project currently utilizes portions of the original Steam ownership verification systems. While the project does not intentionally bypass ownership requirements, online functionality and account interactions may behave differently than intended by the original developers.
-
-Use at your own risk.
-
 NarutoStorm2Revived is not affiliated with, endorsed by, or sponsored by:
 
 * CyberConnect2
