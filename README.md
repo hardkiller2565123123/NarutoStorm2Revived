@@ -81,25 +81,6 @@ The project focuses on:
 
 ---
 
-# Project Goals
-
-## Preservation First
-
-Many older PC games slowly lose documentation, community resources, and technical knowledge over time.
-
-NarutoStorm2Revived aims to preserve:
-
-* File Formats
-* Asset Structures
-* Game Systems
-* Memory Layouts
-* Internal Functions
-* Modding Knowledge
-* Community Discoveries
-* Technical Documentation
-
----
-
 ## Research & Documentation
 
 The project actively documents:
@@ -116,44 +97,6 @@ The project actively documents:
 * Audio Systems
 * Networking Research
 * Asset Containers
-
----
-
-## Future Development Goals
-
-Potential future improvements include:
-
-* Additional Performance Optimizations
-* Improved Stability
-* Expanded Debug Tools
-* Better Controller Support
-* Enhanced Logging Systems
-* Research Utilities
-* Asset Browsers
-* Documentation Wiki
-* Optional UI Improvements
-* Expanded Modding Framework
-* Plugin Support
-* Community Resource Integration
-  
----
-
-# Current Development Status
-
-🚧 Active Development
-
-Current priorities include:
-
-* Research
-* Reverse Engineering
-* Documentation
-* File Analysis
-* Tool Development
-* Framework Improvements
-* Compatibility Enhancements
-* Community Resources
-
-Features and goals may evolve as new discoveries are made.
 
 ---
 
