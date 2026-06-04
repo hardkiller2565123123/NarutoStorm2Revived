@@ -77,7 +77,7 @@ Potential future goals include:
 - Mod loading support
 - Localization improvements
 - Optional UI enhancements
-- ImGui
+- ImGui (Alot Of Options Are PlaceHolders And Do Not Work)
 
 ---
 
