@@ -131,6 +131,8 @@ All content is reviewed and maintained by the project owner.
 
 If you do not approve of AI-assisted development, you are free not to use or contribute to this project.
 
+DEPENDING ON THIS PROJECT AND IF I HAVE TIME I WILL PORT THIS EXISTING FRAMEWORK TO OTHER GAMES EXEPT FOR NARUTO SHINOBI STRIKER
+
 NarutoStorm2Revived is not affiliated with, endorsed by, or sponsored by:
 
 * CyberConnect2
