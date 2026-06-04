@@ -20,7 +20,10 @@
 #include "SteamPersonaManager.h"
 #include "SteamStorageLocal.h"
 #include "SteamStatsLocal.h"
+
 #include "NS2Config.h"
+#include "AssetBrowser.h"
+#include "ModRedirector.h"
 
 static HANDLE g_MainThread = nullptr;
 
@@ -54,7 +57,14 @@ static DWORD WINAPI MainThread(LPVOID)
     SteamPersonaManager::Init();
     SteamStorageLocal::Init();
     SteamStatsLocal::Init();
+
     NS2Config::Init();
+
+    ModRedirector::Init();
+    ModRedirector::Scan();
+
+    AssetBrowser::Init();
+    AssetBrowser::Scan();
 
     SteamFactoryRegistry::Dump();
 
@@ -100,6 +110,7 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
     {
         NetworkHooks::Shutdown();
         DX11Overlay::Shutdown();
+        ModRedirector::Shutdown();
         HookManager::Shutdown();
         Logger::Shutdown();
 

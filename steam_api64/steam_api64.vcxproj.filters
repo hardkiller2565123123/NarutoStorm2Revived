@@ -41,6 +41,12 @@
     <Filter Include="Core\Config">
       <UniqueIdentifier>{b1892807-5f45-4125-97e4-1369ac57765d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Assets">
+      <UniqueIdentifier>{d031a0c1-8d40-4c90-957d-3d9cbcde1521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Assets\cpkfiles">
+      <UniqueIdentifier>{00c03827-c177-4bf8-83e3-bd54af9f0c5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -154,6 +160,18 @@
     </ClCompile>
     <ClCompile Include="NS2Config.cpp">
       <Filter>Core\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetBrowser.cpp">
+      <Filter>Core\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="ModRedirector.cpp">
+      <Filter>Core\ModLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="CpkArchive.cpp">
+      <Filter>Core\Assets\cpkfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetPreview.cpp">
+      <Filter>Core\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -847,6 +865,18 @@
     </ClInclude>
     <ClInclude Include="NS2Config.h">
       <Filter>Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetBrowser.h">
+      <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="ModRedirector.h">
+      <Filter>Core\ModLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="CpkArchive.h">
+      <Filter>Core\Assets\cpkfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetPreview.h">
+      <Filter>Core\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

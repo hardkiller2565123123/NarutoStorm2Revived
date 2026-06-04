@@ -163,6 +163,9 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AssetBrowser.h" />
+    <ClInclude Include="AssetPreview.h" />
+    <ClInclude Include="CpkArchive.h" />
     <ClInclude Include="DX11Overlay.h" />
     <ClInclude Include="FakeSteamBase.h" />
     <ClInclude Include="FakeSteamInterfaces.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="ModLoader.h" />
+    <ClInclude Include="ModRedirector.h" />
     <ClInclude Include="NetworkHooks.h" />
     <ClInclude Include="NS2Config.h" />
     <ClInclude Include="sdk_includes\isteamapplist.h" />
@@ -396,6 +400,9 @@
     <ClInclude Include="WindowedFullscreen.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssetBrowser.cpp" />
+    <ClCompile Include="AssetPreview.cpp" />
+    <ClCompile Include="CpkArchive.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DX11Overlay.cpp" />
     <ClCompile Include="exports.cpp" />
@@ -413,6 +420,7 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="ModLoader.cpp" />
+    <ClCompile Include="ModRedirector.cpp" />
     <ClCompile Include="NetworkHooks.cpp" />
     <ClCompile Include="NS2Config.cpp" />
     <ClCompile Include="SteamAuth.cpp" />
