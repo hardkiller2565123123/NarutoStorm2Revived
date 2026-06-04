@@ -71,6 +71,7 @@ Potential future goals include:
 - FPS improvements
 - Stability fixes
 - Modern Windows compatibility
+- Borderless Windowed (Reqires Game To be In Windowed 1080p or Respective resolution)
 - Controller enhancements
 - Better debugging tools
 - Mod loading support
