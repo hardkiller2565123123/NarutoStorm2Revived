@@ -4,194 +4,258 @@
 
 # NarutoStorm2Revived
 
-A community-driven preservation, research, and enhancement project for
-NARUTO SHIPPUDEN: Ultimate Ninja STORM 2.
+A community-driven preservation, research, modding, and enhancement project for **NARUTO SHIPPUDEN: Ultimate Ninja STORM 2** on PC.
 
-The goal of NarutoStorm2Revived is to document, preserve, and improve the PC version of the game while maintaining compatibility with original game files whenever possible. This repository serves as a hub for modding research, tooling, documentation, bug fixes, and future quality-of-life improvements.
+NarutoStorm2Revived aims to preserve the game, document its internal systems, improve compatibility with modern hardware, and provide tools and resources that make research and modding more accessible for the community.
 
----
+The project is built around a simple philosophy:
 
-## About
-
-Naruto Storm 2 remains one of the most beloved entries in the Ultimate Ninja Storm series, featuring the early Naruto Shippuden storyline, cinematic boss battles, and iconic anime-style visuals developed by CyberConnect2.
-
-NarutoStorm2Revived focuses on:
-
-- Game preservation
-- Modding research
-- Reverse engineering documentation
-- Tool development
-- Bug fixing
-- Quality-of-life improvements
-- Offline functionality research 
-- Community resources and guides
-
-The project is intended for owners of legitimate copies of the game and exists for educational, research, and preservation purposes.
+> Preserve the original experience whenever possible while providing optional enhancements for modern systems and community projects.
 
 ---
 
-## Project Goals
+# About
 
-### Preservation First
+Released by CyberConnect2 and Bandai Namco Entertainment, Naruto Storm 2 remains one of the most iconic anime arena fighters ever created.
 
-Many older games slowly lose community resources, documentation, and modding knowledge over time.
+Featuring cinematic boss battles, memorable story moments, and a unique visual style, the game continues to maintain an active fanbase years after release.
 
-NarutoStorm2Revived aims to archive and preserve:
+NarutoStorm2Revived exists to help preserve community knowledge, improve compatibility, document game systems, and provide tools for future research and modding efforts.
 
-- Game structures
-- File formats
-- Asset information
-- Memory layouts
-- Modding documentation
-- Community discoveries
+The project focuses on:
 
----
-
-### Research & Documentation
-
-This repository collects information about:
-
-- File formats
-- Asset containers
-- Game systems
-- Menus
-- Character data
-- Stages
-- Effects
-- Animation resources
-- Save data structures
-- Internal game functions
+* Preservation
+* Research
+* Reverse Engineering
+* Documentation
+* Modding Support
+* Tool Development
+* Compatibility Improvements
+* Quality-of-Life Enhancements
+* Community Resources
 
 ---
 
-### Quality of Life Improvements
+# Current Features
 
-Potential future goals include:
+### Framework Features
 
-- FPS improvements
-- Stability fixes
-- Modern Windows compatibility
-- Borderless Windowed (Reqires Game To be In Windowed 1080p or Respective resolution)
-- Controller enhancements
-- Better debugging tools
-- Mod loading support
-- Localization improvements
-- Optional UI enhancements
-- ImGui (Alot Of Options Are PlaceHolders And Do Not Work)
+* Proxy DLL Framework
+* Runtime Hooking System
+* Debug Logging
+* Configuration System
+* DirectX 11 Overlay
+* ImGui Debug Menu
+* Performance Monitoring
+* Modern Windows Compatibility
+* Borderless Windowed Mode
+* Optional Debug Utilities
 
----
+### Research Features
 
-### Modding Support
+* File Loading Analysis
+* Memory Research
+* Function Logging
+* Asset Discovery
+* Internal Structure Documentation
+* Game System Research
 
-The project may include:
+### Quality-of-Life Features
 
-- Research tools
-- Asset extraction utilities
-- Logging tools
-- Debugging utilities
-- Modding documentation
-- Community-created resources
+* FPS Monitoring
+* Stability Improvements
+* Borderless Windowed Support
+* Better Debug Information
+* Modern OS Compatibility
+* Additional Logging Tools
 
----
-
-## Current Status
-
-🚧 Early Development
-
-NarutoStorm2Revived is currently focused on:
-
-- Research
-- Documentation
-- File analysis
-- Tool development
-- Reverse engineering
-- Preservation efforts
+> Some features are still experimental and may contain placeholders while research continues.
 
 ---
 
-## Features Planned
+# Project Goals
 
-- File Explorer Tools
-- Asset Viewer
-- Texture Research
-- Character Research
-- Stage Research
-- Animation Research
-- Save Data Documentation
-- Logging Framework
-- Debug Overlay
-- FPS Counter
-- Performance Tools
-- Mod Loader Research
-- Documentation Wiki
-- Community Resources
+## Preservation First
+
+Many older PC games slowly lose documentation, community resources, and technical knowledge over time.
+
+NarutoStorm2Revived aims to preserve:
+
+* File Formats
+* Asset Structures
+* Game Systems
+* Memory Layouts
+* Internal Functions
+* Modding Knowledge
+* Community Discoveries
+* Technical Documentation
 
 ---
 
-## Philosophy
+## Research & Documentation
 
-Rather than replacing large portions of the game, NarutoStorm2Revived focuses on understanding and documenting the original systems.
+The project actively documents:
+
+* Character Systems
+* Stages
+* Animations
+* Effects
+* Menus
+* Save Data
+* Memory Structures
+* Internal Functions
+* Rendering Systems
+* Audio Systems
+* Networking Research
+* Asset Containers
+
+---
+
+## Modding Support
+
+Long-term goals include creating tools and documentation that simplify modding and research.
+
+Planned areas include:
+
+* Asset Extraction
+* Asset Inspection
+* Texture Research
+* Animation Research
+* Character Editing Research
+* Stage Editing Research
+* Save Editing Documentation
+* Mod Loading Support
+* Community Tools
+
+---
+
+## Future Development Goals
+
+Potential future improvements include:
+
+* Additional Performance Optimizations
+* Improved Stability
+* Expanded Debug Tools
+* Better Controller Support
+* Enhanced Logging Systems
+* Research Utilities
+* Asset Browsers
+* Documentation Wiki
+* Optional UI Improvements
+* Expanded Modding Framework
+* Plugin Support
+* Community Resource Integration
+
+---
+
+# Philosophy
+
+NarutoStorm2Revived is not intended to replace the original game.
 
 Whenever possible:
 
-- Original functionality is preserved
-- Original files remain intact
-- Modifications are optional
-- Research is fully documented
-- Tools are open and transparent
+* Original functionality is preserved
+* Original game files remain untouched
+* Modifications remain optional
+* Research is documented
+* Tools remain transparent
+* Community knowledge is shared openly
+
+The project prioritizes understanding and documenting the game's original systems before attempting large-scale modifications.
 
 ---
 
-## Contributing
+# Current Development Status
+
+🚧 Active Development
+
+Current priorities include:
+
+* Research
+* Reverse Engineering
+* Documentation
+* File Analysis
+* Tool Development
+* Framework Improvements
+* Compatibility Enhancements
+* Community Resources
+
+Features and goals may evolve as new discoveries are made.
+
+---
+
+# Contributing
 
 Contributions are welcome.
 
-Areas that can always use help:
+Areas where help is always appreciated:
 
-- Documentation
-- Reverse engineering
-- Testing
-- Research
-- Tool development
-- Bug reports
-- Preservation efforts
+* Documentation
+* Reverse Engineering
+* Testing
+* Research
+* Tool Development
+* Bug Reports
+* Compatibility Testing
+* Preservation Efforts
 
----
-
-## Disclaimer
-
-NarutoStorm2Revived is an unofficial fan project.
-
-Game Uses Original steam dll for ownership i have not fully taken it off their server ban could be possible. you have been WARNED
-
-This repository is not affiliated with or endorsed by:
-
-- CyberConnect2
-- Bandai Namco Entertainment
-- Shueisha
-- Studio Pierrot
-- Masashi Kishimoto
-
-Users must own a legitimate copy of the game.
-
-No copyrighted game assets are distributed by this project.
+Whether you're a programmer, researcher, modder, or longtime fan, your contributions can help preserve valuable knowledge about the game.
 
 ---
 
-## License
+# Disclaimer
 
-This project is released under the MIT License.
+NarutoStorm2Revived is an unofficial fan-made project created for preservation, research, educational, and modding purposes.
+
+The project currently utilizes portions of the original Steam ownership verification systems. While the project does not intentionally bypass ownership requirements, online functionality and account interactions may behave differently than intended by the original developers.
+
+Use at your own risk.
+
+NarutoStorm2Revived is not affiliated with, endorsed by, or sponsored by:
+
+* CyberConnect2
+* Bandai Namco Entertainment
+* Shueisha
+* Studio Pierrot
+* Masashi Kishimoto
+
+Users are expected to own a legitimate copy of the game.
+
+No copyrighted game assets, game files, or proprietary content are distributed through this repository.
+
+---
+
+# License
+
+Released under the MIT License.
 
 See the LICENSE file for additional information.
 
 ---
 
-## Links
+# Links
 
-### Game
+## Game
 
-Where To Buy?
+Purchase the game on Steam:
+
 https://store.steampowered.com/app/543870/NARUTO_SHIPPUDEN_Ultimate_Ninja_STORM_2/
+
+## Repository
+
+Source code, documentation, research notes, and future releases will be available through this GitHub repository.
+
+---
+
+# Special Thanks
+
+Special thanks to:
+
+* The Naruto Storm modding community
+* Preservation communities
+* Reverse engineering researchers
+* Open-source contributors
+* Everyone helping document and preserve older games
 
 ---
 
