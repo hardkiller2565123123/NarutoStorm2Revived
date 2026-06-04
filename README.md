@@ -77,6 +77,7 @@ Potential future goals include:
 - Mod loading support
 - Localization improvements
 - Optional UI enhancements
+- ImGui
 
 ---
 
