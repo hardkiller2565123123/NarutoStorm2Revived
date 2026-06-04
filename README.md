@@ -190,11 +190,8 @@ See the LICENSE file for additional information.
 
 ### Game
 
-:contentReference[oaicite:1]{index=1}
-
-### Repository
-
-GitHub: NarutoStorm2Revived
+Where To Buy?
+https://store.steampowered.com/app/543870/NARUTO_SHIPPUDEN_Ultimate_Ninja_STORM_2/
 
 ---
 
