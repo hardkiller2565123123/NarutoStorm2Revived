@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{837e7c5c-da4e-456b-bbfc-bc17800ef024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\logger">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Core\hooks">
+      <UniqueIdentifier>{64035980-3e80-4f45-b218-7fff6284a4a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\ModLoader">
+      <UniqueIdentifier>{b101b624-91cb-47a9-b94a-723bcee636be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Proxy">
+      <UniqueIdentifier>{b495b4fc-5c8e-45ac-813d-3ec8cfad604a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\minhook">
+      <UniqueIdentifier>{77bb434a-9096-419a-8a1d-ade931126c6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\features">
+      <UniqueIdentifier>{a7eca4ed-a433-426b-9a81-4817a42b1488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Overlay">
+      <UniqueIdentifier>{0554ab91-768f-4b92-8a7a-f885e5156a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Network">
+      <UniqueIdentifier>{f7f87cef-44a8-443d-81a5-5c6cfe1501a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Steam">
+      <UniqueIdentifier>{b4ad8a65-d207-4262-9a5d-8d58af7dd46f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk_includes">
+      <UniqueIdentifier>{9b02f85a-ef17-4f01-a71c-8e1ee4ae4b08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{5d00edb2-0519-41f2-8536-692122514365}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="SteamProxy.cpp">
+      <Filter>Core\Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="HookManager.cpp">
+      <Filter>Core\hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="ModLoader.cpp">
+      <Filter>Core\ModLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowedFullscreen.cpp">
+      <Filter>Core\features</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Overlay.cpp">
+      <Filter>Core\Overlay</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkHooks.cpp">
+      <Filter>Core\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="exports.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamNetworking.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="FakeSteamFriends.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="FakeSteamMatchmaking.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="FakeSteamUserStats.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="FakeSteamRemoteStorage.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="FakeSteamGenericInterfaces.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamVersionLogger.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamCoreForwarders.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamInterfaceRouter.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamIDManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamSessionManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamPacketLogger.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamP2PManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamAuth.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamFactoryRegistry.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamConfig.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamCallbackManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamCallResultManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamLobbyManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamPersonaManager.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamStorageLocal.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="SteamStatsLocal.cpp">
+      <Filter>Steam</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx11.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StdInc.h" />
+    <ClInclude Include="Logger.h">
+      <Filter>Core\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamProxy.h">
+      <Filter>Core\Proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="HookManager.h">
+      <Filter>Core\hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="ModLoader.h">
+      <Filter>Core\ModLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="MinHook.h">
+      <Filter>Core\minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowedFullscreen.h">
+      <Filter>Core\features</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Overlay.h">
+      <Filter>Core\Overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkHooks.h">
+      <Filter>Core\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapplist.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamapps007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamappticket.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient011.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient012.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient013.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient014.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient015.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient016.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient017.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient018.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamclient019.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamcontroller007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends011.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends012.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends013.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends014.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends015.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamfriends016.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgamecoordinator.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver011.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver012.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver013.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserver014.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamgameserverstats.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhtmlsurface.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhtmlsurface001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhtmlsurface002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhtmlsurface003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhtmlsurface004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhttp.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhttp001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamhttp002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminput.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminput001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminput002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminput005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminventory.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminventory001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteaminventory002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammasterserverupdater.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammatchmaking008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammusic.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteammusicremote.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworking.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworking001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworking002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworking003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworking004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworking005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingmessages.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsockets009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingsocketsserialized.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingutils.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingutils001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingutils002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamnetworkingutils003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamparentalsettings.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamps3overlayrenderer.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremoteplay.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage011.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage012.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage013.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamremotestorage014.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamscreenshots.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamtv.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc012.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc013.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc014.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc015.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamugc016.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamunifiedmessages.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser011.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser012.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser013.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser014.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser015.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser016.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser017.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser018.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser019.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser020.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser021.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuser022.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats001.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats010.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamuserstats011.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils002.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils003.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils004.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils005.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils006.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils007.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils008.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamutils009.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\isteamvideo.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\matchmakingtypes.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steam_api.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steam_api_common.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steam_api_flat.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steam_api_internal.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steam_gameserver.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamclientpublic.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamdatagram_ticketgen.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamdatagram_tickets.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamencryptedappticket.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamhttpenums.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamnetworkingfakeip.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamnetworkingsockets.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamnetworkingtypes.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamps3params.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamtypes.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk_includes\steamuniverse.h">
+      <Filter>sdk_includes</Filter>
+    </ClInclude>
+    <ClInclude Include="FakeSteamInterfaces.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="FakeSteamBase.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamVersionLogger.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamCoreForwarders.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamInterfaceRouter.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamIDManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamSessionManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamPacketLogger.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamP2PManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamAuth.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamFactoryRegistry.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamConfig.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamCallbackManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamCallResultManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamLobbyManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamPersonaManager.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamStorageLocal.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamStatsLocal.h">
+      <Filter>Steam</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx11.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libMinHook.x64.lib">
+      <Filter>Core\minhook</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

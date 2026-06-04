@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="steam_api64/steam_api64.vcxproj" Id="a36a5aaf-0f0c-4998-a6c7-3a583b9f4ca2" />
+</Solution>
