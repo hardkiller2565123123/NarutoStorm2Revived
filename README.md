@@ -13,7 +13,7 @@ The goal of NarutoStorm2Revived is to document, preserve, and improve the PC ver
 
 ## About
 
-Naruto Storm 2 remains one of the most beloved entries in the Ultimate Ninja Storm series, featuring the early Naruto Shippuden storyline, cinematic boss battles, and iconic anime-style visuals developed by CyberConnect2. :contentReference[oaicite:0]{index=0}
+Naruto Storm 2 remains one of the most beloved entries in the Ultimate Ninja Storm series, featuring the early Naruto Shippuden storyline, cinematic boss battles, and iconic anime-style visuals developed by CyberConnect2.
 
 NarutoStorm2Revived focuses on:
 
