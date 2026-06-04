@@ -23,7 +23,7 @@ NarutoStorm2Revived focuses on:
 - Tool development
 - Bug fixing
 - Quality-of-life improvements
-- Offline functionality research (KINDA STILL NEEDS WORK IN PROCCESS OF EMULATING STEAM FUNCTIONS CURRENTLY CAN NOT HOST OR SEARCH FOR LOBBY USES ORIGINAL STEAM_API ALSO FOR AUTH)
+- Offline functionality research 
 - Community resources and guides
 
 The project is intended for owners of legitimate copies of the game and exists for educational, research, and preservation purposes.
@@ -159,6 +159,8 @@ Areas that can always use help:
 ## Disclaimer
 
 NarutoStorm2Revived is an unofficial fan project.
+
+Game Uses Original steam dll for ownership i have not fully taken it off their server ban could be possible. you have been WARNED
 
 This repository is not affiliated with or endorsed by:
 
