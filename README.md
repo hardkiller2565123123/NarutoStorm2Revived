@@ -50,6 +50,7 @@ The project focuses on:
 * Modern Windows Compatibility
 * Borderless Windowed Mode
 * Optional Debug Utilities
+* Asset Dumping
 
 ### Research Features
 
