@@ -8,10 +8,6 @@ A community-driven preservation, research, modding, and enhancement project for 
 
 NarutoStorm2Revived aims to preserve the game, document its internal systems, improve compatibility with modern hardware, and provide tools and resources that make research and modding more accessible for the community.
 
-The project is built around a simple philosophy:
-
-> Preserve the original experience whenever possible while providing optional enhancements for modern systems and community projects.
-
 ---
 
 # About
@@ -50,7 +46,6 @@ The project focuses on:
 * Modern Windows Compatibility
 * Borderless Windowed Mode
 * Optional Debug Utilities
-* Asset Dumping
 
 ### Research Features
 
@@ -69,6 +64,18 @@ The project focuses on:
 * Better Debug Information
 * Modern OS Compatibility
 * Additional Logging Tools
+
+## Modding Support
+
+* Asset Extraction
+* Asset Inspection
+* Texture Research
+* Animation Research
+* Character Editing Research
+* Stage Editing Research
+* Save Editing Documentation
+* Mod Loading Support
+* Community Tools
 
 > Some features are still experimental and may contain placeholders while research continues.
 
@@ -112,24 +119,6 @@ The project actively documents:
 
 ---
 
-## Modding Support
-
-Long-term goals include creating tools and documentation that simplify modding and research.
-
-Planned areas include:
-
-* Asset Extraction
-* Asset Inspection
-* Texture Research
-* Animation Research
-* Character Editing Research
-* Stage Editing Research
-* Save Editing Documentation
-* Mod Loading Support
-* Community Tools
-
----
-
 ## Future Development Goals
 
 Potential future improvements include:
@@ -146,24 +135,7 @@ Potential future improvements include:
 * Expanded Modding Framework
 * Plugin Support
 * Community Resource Integration
-
----
-
-# Philosophy
-
-NarutoStorm2Revived is not intended to replace the original game.
-
-Whenever possible:
-
-* Original functionality is preserved
-* Original game files remain untouched
-* Modifications remain optional
-* Research is documented
-* Tools remain transparent
-* Community knowledge is shared openly
-
-The project prioritizes understanding and documenting the game's original systems before attempting large-scale modifications.
-
+* 
 ---
 
 # Current Development Status
