@@ -3,30 +3,26 @@
 
 namespace CpkArchive
 {
-    struct CpkEntry
+    struct Entry
     {
-        std::string ArchivePath;
         std::string Name;
-        std::string Directory;
-        std::string VirtualPath;
+        std::string Path;
         uint64_t Offset = 0;
         uint64_t Size = 0;
-        uint64_t ExtractSize = 0;
-        bool Compressed = false;
-        bool HasPhysicalData = false;
+        bool Heuristic = false;
     };
 
-    struct CpkInfo
+    struct ArchiveInfo
     {
         std::string Path;
         std::string Name;
         uint64_t Size = 0;
-        bool Parsed = false;
-        std::vector<CpkEntry> Entries;
+        std::vector<Entry> Entries;
+        bool Valid = false;
+        std::string Status;
     };
 
-    bool Load(const std::string& path, CpkInfo& outInfo);
-    bool DumpEntry(const CpkEntry& entry, const std::string& dumpRoot, std::string& outPath);
-    bool DumpArchive(const CpkInfo& info, const std::string& dumpRoot, std::string& outPath);
-    const char* GetLastErrorText();
+    bool Load(const std::string& path, ArchiveInfo& outInfo);
+    bool DumpFile(const std::string& archivePath, const Entry& entry, const std::string& outPath);
+    std::string BuildInfoText(const ArchiveInfo& info);
 }

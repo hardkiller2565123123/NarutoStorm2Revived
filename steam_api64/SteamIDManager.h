@@ -3,15 +3,18 @@
 
 namespace SteamIDManager
 {
-    void Init();
+    bool Init();
+    void Shutdown();
 
+    CSteamID FromUint64(uint64_t value);
     CSteamID GetLocalSteamID();
-    CSteamID GetHostSteamID();
-    CSteamID GetLobbyOwnerSteamID();
+    CSteamID GetLocalUser();
 
-    void SetLocalSteamID(CSteamID id);
-    void SetHostSteamID(CSteamID id);
-    void SetLobbyOwnerSteamID(CSteamID id);
+    uint64_t ToUint64(CSteamID value);
+    uint64_t GetSteamID64();
+    uint32_t GetAccountID();
 
-    uint64_t ToUint64(CSteamID id);
+    const char* GetPersonaName();
+    const std::string& GetPersonaNameString();
+    void SetPersonaName(const std::string& name);
 }

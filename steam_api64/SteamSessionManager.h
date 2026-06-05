@@ -1,30 +1,16 @@
 #pragma once
 #include "StdInc.h"
 
-struct NS2LobbyInfo
-{
-    CSteamID LobbyID = 1;
-    CSteamID OwnerID = 1;
-    int MemberLimit = 8;
-    bool Joinable = true;
-    std::map<std::string, std::string> Data;
-    std::vector<CSteamID> Members;
-};
-
 namespace SteamSessionManager
 {
-    void Init();
+    bool Init();
+    void Shutdown();
 
-    CSteamID CreateLobby(int memberLimit);
-    bool JoinLobby(CSteamID lobby);
-    void LeaveLobby(CSteamID lobby);
+    void JoinLobby(CSteamID lobbyID);
+    void LeaveLobby(CSteamID lobbyID);
+    void LeaveLobby();
 
-    NS2LobbyInfo* GetCurrentLobby();
-    NS2LobbyInfo* GetLobby(CSteamID lobby);
-
-    bool SetLobbyData(CSteamID lobby, const char* key, const char* value);
-    const char* GetLobbyData(CSteamID lobby, const char* key);
-
-    int GetLobbyMemberCount(CSteamID lobby);
-    CSteamID GetLobbyMember(CSteamID lobby, int index);
+    CSteamID GetCurrentLobby();
+    uint64_t GetCurrentLobbyID();
+    bool IsInLobby();
 }

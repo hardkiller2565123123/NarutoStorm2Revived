@@ -1,23 +1,37 @@
 #pragma once
 #include "StdInc.h"
-#include "imgui.h"
+#include "AssetBrowser.h"
 
 namespace AssetPreview
 {
-    struct PreviewInfo
+    enum class PreviewKind
     {
-        std::string Path;
-        std::string Extension;
-        std::string Text;
-        std::string Hex;
-        std::string DdsInfo;
-        bool IsText = false;
-        bool IsDds = false;
-        bool IsModelLike = false;
-        bool Loaded = false;
+        None,
+        Info,
+        Text,
+        Hex,
+        TextureInfo,
+        AudioInfo,
+        CpkInfo,
+        XfbinInfo,
+        ModelShell
     };
 
-    bool LoadPreview(const std::string& path, PreviewInfo& outInfo, size_t maxBytes = 65536);
-    void DrawPreview(const PreviewInfo& info, float width, float height);
-    void DrawModelPreviewPlaceholder(const char* label, float width, float height);
+    struct PreviewState
+    {
+        PreviewKind Kind = PreviewKind::None;
+        std::string Title;
+        std::string Text;
+        std::vector<unsigned char> Bytes;
+        int Width = 0;
+        int Height = 0;
+        int MipCount = 0;
+        std::string Format;
+        bool Valid = false;
+        std::string Status;
+    };
+
+    bool BuildPreview(const AssetBrowser::AssetEntry& asset, PreviewState& outState, bool preferDumped = true);
+    std::string BuildHex(const std::vector<unsigned char>& bytes, size_t maxBytes = 4096);
+    bool ReadBytes(const std::string& path, std::vector<unsigned char>& outBytes, size_t maxBytes = 1024 * 1024);
 }

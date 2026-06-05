@@ -20,6 +20,8 @@
 #include "SteamPersonaManager.h"
 #include "SteamStorageLocal.h"
 #include "SteamStatsLocal.h"
+#include "AssetModelViewer.h"
+#include "AssetPreloadManager.h"
 
 #include "NS2Config.h"
 #include "AssetBrowser.h"
@@ -64,26 +66,27 @@ static DWORD WINAPI MainThread(LPVOID)
     ModRedirector::Scan();
 
     AssetBrowser::Init();
-    AssetBrowser::Scan();
+    AssetBrowser::LoadCache();
+    AssetBrowser::StartAsyncScan();
+
+    AssetPreloadManager::Init();
+    AssetPreloadManager::StartFullPreload(false);
+
+    AssetModelViewer::Init();
+  
 
     SteamFactoryRegistry::Dump();
 
     if (!NetworkHooks::Init())
-    {
         Logger::Error("Network hooks failed to initialize");
-    }
 
     if (!DX11Overlay::Init())
-    {
         Logger::Error("DX11 overlay failed to initialize");
-    }
 
     WindowedFullscreen::Init();
-
     ModLoader::LoadMods();
 
     Logger::Info("NartuoStorm2Revived initialized");
-
     return 0;
 }
 
@@ -94,29 +97,21 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
     case DLL_PROCESS_ATTACH:
     {
         DisableThreadLibraryCalls(module);
-
-        g_MainThread = CreateThread(
-            nullptr,
-            0,
-            MainThread,
-            nullptr,
-            0,
-            nullptr);
-
+        g_MainThread = CreateThread(nullptr, 0, MainThread, nullptr, 0, nullptr);
         break;
     }
-
     case DLL_PROCESS_DETACH:
     {
+        AssetPreloadManager::Shutdown();
+        AssetModelViewer::Shutdown();
+
         NetworkHooks::Shutdown();
         DX11Overlay::Shutdown();
         ModRedirector::Shutdown();
         HookManager::Shutdown();
         Logger::Shutdown();
-
         break;
     }
     }
-
     return TRUE;
 }

@@ -164,6 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AssetBrowser.h" />
+    <ClInclude Include="AssetModelViewer.h" />
+    <ClInclude Include="AssetPreloadManager.h" />
     <ClInclude Include="AssetPreview.h" />
     <ClInclude Include="CpkArchive.h" />
     <ClInclude Include="DX11Overlay.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="ModRedirector.h" />
     <ClInclude Include="NetworkHooks.h" />
     <ClInclude Include="NS2Config.h" />
+    <ClInclude Include="PatchManager.h" />
     <ClInclude Include="sdk_includes\isteamapplist.h" />
     <ClInclude Include="sdk_includes\isteamapps.h" />
     <ClInclude Include="sdk_includes\isteamapps001.h" />
@@ -401,6 +404,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetBrowser.cpp" />
+    <ClCompile Include="AssetModelViewer.cpp" />
+    <ClCompile Include="AssetPreloadManager.cpp" />
     <ClCompile Include="AssetPreview.cpp" />
     <ClCompile Include="CpkArchive.cpp" />
     <ClCompile Include="dllmain.cpp" />
@@ -423,6 +428,7 @@
     <ClCompile Include="ModRedirector.cpp" />
     <ClCompile Include="NetworkHooks.cpp" />
     <ClCompile Include="NS2Config.cpp" />
+    <ClCompile Include="PatchManager.cpp" />
     <ClCompile Include="SteamAuth.cpp" />
     <ClCompile Include="SteamCallbackManager.cpp" />
     <ClCompile Include="SteamCallResultManager.cpp" />

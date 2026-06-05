@@ -1,137 +1,72 @@
 #include "StdInc.h"
 #include "SteamSessionManager.h"
+#include "SteamLobbyManager.h"
 #include "SteamIDManager.h"
 #include "Logger.h"
 
-static std::mutex g_Mutex;
-static std::map<uint64_t, NS2LobbyInfo> g_Lobbies;
-static CSteamID g_CurrentLobby = 0;
-static uint64_t g_NextLobbyID = 100000;
+namespace
+{
+    uint64_t g_CurrentLobby = 0;
+}
 
 namespace SteamSessionManager
 {
-    void Init()
+    bool Init()
     {
+        g_CurrentLobby = 0;
         Logger::Info("SteamSessionManager initialized");
-    }
-
-    CSteamID CreateLobby(int memberLimit)
-    {
-        std::lock_guard<std::mutex> lock(g_Mutex);
-
-        CSteamID lobbyID = g_NextLobbyID++;
-
-        NS2LobbyInfo lobby{};
-        lobby.LobbyID = lobbyID;
-        lobby.OwnerID = SteamIDManager::GetLocalSteamID();
-        lobby.MemberLimit = memberLimit > 0 ? memberLimit : 8;
-        lobby.Joinable = true;
-        lobby.Members.push_back(SteamIDManager::GetLocalSteamID());
-
-        g_Lobbies[SteamIDManager::ToUint64(lobbyID)] = lobby;
-        g_CurrentLobby = lobbyID;
-
-        Logger::Info("SteamSessionManager lobby created: " + std::to_string(SteamIDManager::ToUint64(lobbyID)));
-
-        return lobbyID;
-    }
-
-    bool JoinLobby(CSteamID lobby)
-    {
-        std::lock_guard<std::mutex> lock(g_Mutex);
-
-        uint64_t id = SteamIDManager::ToUint64(lobby);
-
-        if (!g_Lobbies.count(id))
-        {
-            NS2LobbyInfo info{};
-            info.LobbyID = lobby;
-            info.OwnerID = lobby;
-            info.MemberLimit = 8;
-            info.Joinable = true;
-            info.Members.push_back(SteamIDManager::GetLocalSteamID());
-            g_Lobbies[id] = info;
-        }
-
-        g_CurrentLobby = lobby;
-
-        Logger::Info("SteamSessionManager joined lobby: " + std::to_string(id));
-
         return true;
     }
 
-    void LeaveLobby(CSteamID lobby)
+    void Shutdown()
     {
-        std::lock_guard<std::mutex> lock(g_Mutex);
+        g_CurrentLobby = 0;
+    }
 
-        if (SteamIDManager::ToUint64(g_CurrentLobby) == SteamIDManager::ToUint64(lobby))
+    void JoinLobby(CSteamID lobbyID)
+    {
+        uint64_t id = SteamIDManager::ToUint64(lobbyID);
+
+        if (id == 0)
+            return;
+
+        SteamLobbyManager::JoinLobby(lobbyID);
+        g_CurrentLobby = id;
+
+        Logger::Info("SteamSessionManager joined lobby: " + std::to_string(static_cast<unsigned long long>(g_CurrentLobby)));
+    }
+
+    void LeaveLobby(CSteamID lobbyID)
+    {
+        uint64_t id = SteamIDManager::ToUint64(lobbyID);
+
+        if (id == 0)
+            id = g_CurrentLobby;
+
+        if (id != 0)
+            SteamLobbyManager::LeaveLobby(SteamIDManager::FromUint64(id));
+
+        if (g_CurrentLobby == id)
             g_CurrentLobby = 0;
-
-        Logger::Info("SteamSessionManager left lobby: " + std::to_string(SteamIDManager::ToUint64(lobby)));
     }
 
-    NS2LobbyInfo* GetCurrentLobby()
+    void LeaveLobby()
     {
-        return GetLobby(g_CurrentLobby);
+        LeaveLobby(SteamIDManager::FromUint64(g_CurrentLobby));
     }
 
-    NS2LobbyInfo* GetLobby(CSteamID lobby)
+    CSteamID GetCurrentLobby()
     {
-        uint64_t id = SteamIDManager::ToUint64(lobby);
-
-        auto it = g_Lobbies.find(id);
-
-        if (it == g_Lobbies.end())
-            return nullptr;
-
-        return &it->second;
+        return SteamIDManager::FromUint64(g_CurrentLobby);
     }
 
-    bool SetLobbyData(CSteamID lobby, const char* key, const char* value)
+    uint64_t GetCurrentLobbyID()
     {
-        NS2LobbyInfo* info = GetLobby(lobby);
-
-        if (!info || !key)
-            return false;
-
-        info->Data[key] = value ? value : "";
-
-        Logger::Info(std::string("SteamSessionManager lobby data set: ") + key);
-
-        return true;
+        return g_CurrentLobby;
     }
 
-    const char* GetLobbyData(CSteamID lobby, const char* key)
+    bool IsInLobby()
     {
-        static std::string empty;
-
-        NS2LobbyInfo* info = GetLobby(lobby);
-
-        if (!info || !key)
-            return empty.c_str();
-
-        auto it = info->Data.find(key);
-
-        if (it == info->Data.end())
-            return empty.c_str();
-
-        return it->second.c_str();
-    }
-
-    int GetLobbyMemberCount(CSteamID lobby)
-    {
-        NS2LobbyInfo* info = GetLobby(lobby);
-
-        return info ? static_cast<int>(info->Members.size()) : 0;
-    }
-
-    CSteamID GetLobbyMember(CSteamID lobby, int index)
-    {
-        NS2LobbyInfo* info = GetLobby(lobby);
-
-        if (!info || index < 0 || index >= static_cast<int>(info->Members.size()))
-            return 0;
-
-        return info->Members[index];
+        return g_CurrentLobby != 0;
     }
 }

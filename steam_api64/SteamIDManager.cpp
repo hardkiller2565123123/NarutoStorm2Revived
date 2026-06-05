@@ -1,53 +1,69 @@
 #include "StdInc.h"
 #include "SteamIDManager.h"
+#include "SteamConfig.h"
 #include "Logger.h"
 
-static CSteamID g_LocalSteamID = 76561198000000001ULL;
-static CSteamID g_HostSteamID = 76561198000000001ULL;
-static CSteamID g_LobbyOwnerSteamID = 76561198000000001ULL;
+namespace
+{
+    std::string g_FallbackPersona = "NS2Revived";
+}
 
 namespace SteamIDManager
 {
-    void Init()
+    bool Init()
     {
-        Logger::Info("SteamIDManager initialized");
+        Logger::Info("SteamIDManager initialized id=" + std::to_string(static_cast<unsigned long long>(GetSteamID64())));
+        return true;
+    }
+
+    void Shutdown()
+    {}
+
+    CSteamID FromUint64(uint64_t value)
+    {
+        return static_cast<CSteamID>(value);
     }
 
     CSteamID GetLocalSteamID()
     {
-        return g_LocalSteamID;
+        return FromUint64(GetSteamID64());
     }
 
-    CSteamID GetHostSteamID()
+    CSteamID GetLocalUser()
     {
-        return g_HostSteamID;
+        return GetLocalSteamID();
     }
 
-    CSteamID GetLobbyOwnerSteamID()
+    uint64_t ToUint64(CSteamID value)
     {
-        return g_LobbyOwnerSteamID;
+        return static_cast<uint64_t>(value);
     }
 
-    void SetLocalSteamID(CSteamID id)
+    uint64_t GetSteamID64()
     {
-        g_LocalSteamID = id;
-        Logger::Info("SteamIDManager local SteamID set: " + std::to_string(ToUint64(id)));
+        return SteamConfig::Get().SteamID;
     }
 
-    void SetHostSteamID(CSteamID id)
+    uint32_t GetAccountID()
     {
-        g_HostSteamID = id;
-        Logger::Info("SteamIDManager host SteamID set: " + std::to_string(ToUint64(id)));
+        return static_cast<uint32_t>(GetSteamID64() & 0xFFFFFFFFu);
     }
 
-    void SetLobbyOwnerSteamID(CSteamID id)
+    const char* GetPersonaName()
     {
-        g_LobbyOwnerSteamID = id;
-        Logger::Info("SteamIDManager lobby owner SteamID set: " + std::to_string(ToUint64(id)));
+        const std::string& name = SteamConfig::Get().PersonaName;
+        return name.empty() ? g_FallbackPersona.c_str() : name.c_str();
     }
 
-    uint64_t ToUint64(CSteamID id)
+    const std::string& GetPersonaNameString()
     {
-        return static_cast<uint64_t>(id);
+        const std::string& name = SteamConfig::Get().PersonaName;
+        return name.empty() ? g_FallbackPersona : name;
+    }
+
+    void SetPersonaName(const std::string& name)
+    {
+        SteamConfig::Mutable().PersonaName = name.empty() ? g_FallbackPersona : name;
+        SteamConfig::Save();
     }
 }
