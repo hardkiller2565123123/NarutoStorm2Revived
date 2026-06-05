@@ -3,23 +3,20 @@
 
 namespace ModRedirector
 {
-    struct RedirectEntry
+    struct OverrideEntry
     {
         std::string VirtualPath;
-        std::string ReplacementPath;
+        std::string FullPath;
         std::string SourceName;
-        bool IsPackage = false;
+        bool Enabled = true;
     };
 
     bool Init();
-    void Shutdown();
     void Scan();
-    void DumpToLog();
+    void Shutdown();
 
-    bool IsEnabled();
-    void SetEnabled(bool enabled);
-
-    bool ResolvePath(const std::string& requestedVirtualPath, std::string& outReplacementPath);
-    const std::vector<RedirectEntry>& GetRedirects();
+    bool Resolve(const std::string& virtualPath, std::string& outFullPath);
+    bool HasOverride(const std::string& virtualPath);
+    const std::vector<OverrideEntry>& GetOverrides();
     const std::string& GetModsFolder();
 }

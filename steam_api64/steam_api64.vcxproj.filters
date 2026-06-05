@@ -173,6 +173,15 @@
     <ClCompile Include="AssetPreview.cpp">
       <Filter>Core\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="AssetModelViewer.cpp">
+      <Filter>Core\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetPreloadManager.cpp">
+      <Filter>Core\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="PatchManager.cpp">
+      <Filter>Core\Overlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdInc.h" />
@@ -877,6 +886,15 @@
     </ClInclude>
     <ClInclude Include="AssetPreview.h">
       <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetModelViewer.h">
+      <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetPreloadManager.h">
+      <Filter>Core\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="PatchManager.h">
+      <Filter>Core\Overlay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

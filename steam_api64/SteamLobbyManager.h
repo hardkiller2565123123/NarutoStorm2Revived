@@ -1,30 +1,51 @@
 #pragma once
 #include "StdInc.h"
-
-struct NS2Lobby
-{
-    CSteamID ID = 0;
-    CSteamID Owner = 0;
-    int MaxMembers = 8;
-    bool Joinable = true;
-    std::vector<CSteamID> Members;
-    std::map<std::string, std::string> Data;
-};
+#include "SteamIDManager.h"
 
 namespace SteamLobbyManager
 {
-    void Init();
+    struct NS2Lobby
+    {
+        CSteamID LobbyID = 0;
+        CSteamID OwnerID = 0;
+        int MaxMembers = 4;
+        bool Joinable = true;
+        bool PrivateLobby = false;
+        std::map<std::string, std::string> Data;
+        std::vector<CSteamID> Members;
+    };
 
+    bool Init();
+    void Shutdown();
+
+    CSteamID CreateLobby();
     CSteamID CreateLobby(int maxMembers);
+    CSteamID CreateLobby(int type, int maxMembers);
+
     bool JoinLobby(CSteamID lobbyID);
     void LeaveLobby(CSteamID lobbyID);
+    void LeaveCurrentLobby();
 
-    NS2Lobby* GetLobby(CSteamID lobbyID);
     CSteamID GetCurrentLobby();
+    uint64_t GetCurrentLobbyID();
 
-    bool SetData(CSteamID lobbyID, const char* key, const char* value);
-    const char* GetData(CSteamID lobbyID, const char* key);
+    const NS2Lobby* GetLobby(CSteamID lobbyID);
+    NS2Lobby* GetMutableLobby(CSteamID lobbyID);
+
+    int GetLobbyCount();
+    CSteamID GetLobbyByIndex(int index);
+
+    bool SetData(CSteamID lobbyID, const std::string& key, const std::string& value);
+    bool SetLobbyData(CSteamID lobbyID, const std::string& key, const std::string& value);
+
+    const char* GetData(CSteamID lobbyID, const std::string& key);
+    const char* GetLobbyData(CSteamID lobbyID, const std::string& key);
 
     int GetMemberCount(CSteamID lobbyID);
+    int GetNumLobbyMembers(CSteamID lobbyID);
+
     CSteamID GetMemberByIndex(CSteamID lobbyID, int index);
+    CSteamID GetLobbyMemberByIndex(CSteamID lobbyID, int index);
+
+    const std::map<uint64_t, NS2Lobby>& GetLobbies();
 }

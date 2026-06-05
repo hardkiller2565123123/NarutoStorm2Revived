@@ -4,22 +4,21 @@
 
 namespace
 {
-    bool g_Enabled = true;
     std::string g_GameFolder;
     std::string g_ModsFolder;
-    std::vector<ModRedirector::RedirectEntry> g_Redirects;
+    std::vector<ModRedirector::OverrideEntry> g_Overrides;
 
-    std::string ToLower(std::string text)
+    std::string ToLower(std::string s)
     {
-        std::transform(text.begin(), text.end(), text.begin(),
-            [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
-        return text;
+        std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return (char)std::tolower(c); });
+        return s;
     }
 
-    std::string NormalizeSlashes(std::string text)
+    std::string Normalize(std::string s)
     {
-        std::replace(text.begin(), text.end(), '\\', '/');
-        return text;
+        std::replace(s.begin(), s.end(), '\\', '/');
+        while (!s.empty() && (s[0] == '/' || s[0] == '.')) s.erase(s.begin());
+        return s;
     }
 
     std::string GetExeFolder()
@@ -29,44 +28,18 @@ namespace
         return std::filesystem::path(path).parent_path().string();
     }
 
-    std::string StripModPrefix(const std::string& relativePath)
+    std::string StripPrefix(std::string path)
     {
-        std::string path = NormalizeSlashes(relativePath);
+        path = Normalize(path);
         std::string lower = ToLower(path);
-
-        const char* prefixes[] =
+        const char* prefixes[] = { "override/", "overrides/", "loose/", "files/", "raw/", "data/" };
+        for (const char* p : prefixes)
         {
-            "override/",
-            "overrides/",
-            "loose/",
-            "files/",
-            "raw/",
-            "data/"
-        };
-
-        for (const char* prefix : prefixes)
-        {
-            std::string p = prefix;
-            if (lower.rfind(p, 0) == 0)
-                return path.substr(p.size());
+            std::string pre = p;
+            if (lower.rfind(pre, 0) == 0)
+                return path.substr(pre.size());
         }
-
         return path;
-    }
-
-    bool ShouldRegister(const std::filesystem::path& path)
-    {
-        std::string ext = ToLower(path.extension().string());
-
-        static const std::vector<std::string> allowed =
-        {
-            ".cpk", ".xfbin", ".nud", ".nut", ".anm", ".mot", ".seq",
-            ".acb", ".awb", ".adx", ".hca", ".bin", ".dat", ".dds",
-            ".png", ".jpg", ".jpeg", ".tga", ".wav", ".ogg", ".txt",
-            ".xml", ".lua", ".json", ".ini"
-        };
-
-        return std::find(allowed.begin(), allowed.end(), ext) != allowed.end();
     }
 }
 
@@ -76,7 +49,6 @@ namespace ModRedirector
     {
         g_GameFolder = GetExeFolder();
         g_ModsFolder = (std::filesystem::path(g_GameFolder) / "NartuoStorm2Revived" / "mods").string();
-
         try
         {
             std::filesystem::create_directories(g_ModsFolder);
@@ -84,111 +56,65 @@ namespace ModRedirector
             std::filesystem::create_directories(std::filesystem::path(g_ModsFolder) / "cpk");
         }
         catch (...) {}
-
-        Logger::Info("ModRedirector mods folder: " + g_ModsFolder);
+        Logger::Info("ModRedirector initialized: " + g_ModsFolder);
         return true;
-    }
-
-    void Shutdown()
-    {
-        g_Redirects.clear();
-        Logger::Info("ModRedirector shutdown");
     }
 
     void Scan()
     {
-        g_Redirects.clear();
-
-        if (g_ModsFolder.empty())
-            Init();
-
-        if (!std::filesystem::exists(g_ModsFolder))
-            return;
+        if (g_ModsFolder.empty()) Init();
+        g_Overrides.clear();
+        if (!std::filesystem::exists(g_ModsFolder)) return;
 
         try
         {
-            for (const auto& entry : std::filesystem::recursive_directory_iterator(g_ModsFolder))
+            for (const auto& item : std::filesystem::recursive_directory_iterator(g_ModsFolder))
             {
-                if (!entry.is_regular_file())
-                    continue;
-
-                const auto& path = entry.path();
-                if (!ShouldRegister(path))
-                    continue;
-
-                RedirectEntry redirect{};
-                redirect.ReplacementPath = path.string();
-                redirect.SourceName = path.filename().string();
-                redirect.IsPackage = ToLower(path.extension().string()) == ".cpk";
-
-                std::string relative = NormalizeSlashes(std::filesystem::relative(path, g_ModsFolder).string());
-                redirect.VirtualPath = StripModPrefix(relative);
-
-                if (redirect.IsPackage)
-                {
-                    // Allow both full virtual path and same-filename CPK replacement lookup.
-                    redirect.VirtualPath = path.filename().string();
-                }
-
-                g_Redirects.push_back(redirect);
+                if (!item.is_regular_file()) continue;
+                std::string rel = Normalize(std::filesystem::relative(item.path(), g_ModsFolder).string());
+                std::string virt = StripPrefix(rel);
+                OverrideEntry entry{};
+                entry.VirtualPath = virt;
+                entry.FullPath = item.path().string();
+                entry.SourceName = rel;
+                entry.Enabled = true;
+                g_Overrides.push_back(entry);
             }
         }
         catch (const std::exception& e)
         {
-            Logger::Error(std::string("ModRedirector scan exception: ") + e.what());
+            Logger::Error(std::string("ModRedirector scan failed: ") + e.what());
         }
-
-        Logger::Info("ModRedirector scan finished. Redirects: " + std::to_string(g_Redirects.size()));
+        Logger::Info("ModRedirector overrides found: " + std::to_string(g_Overrides.size()));
     }
 
-    void DumpToLog()
+    void Shutdown()
     {
-        Logger::Info("ModRedirector dump begin");
-        for (const auto& redirect : g_Redirects)
-            Logger::Info("redirect virtual=" + redirect.VirtualPath + " replacement=" + redirect.ReplacementPath + (redirect.IsPackage ? " package=1" : ""));
-        Logger::Info("ModRedirector dump end");
+        g_Overrides.clear();
+        Logger::Info("ModRedirector shutdown");
     }
 
-    bool IsEnabled()
+    bool Resolve(const std::string& virtualPath, std::string& outFullPath)
     {
-        return g_Enabled;
-    }
-
-    void SetEnabled(bool enabled)
-    {
-        g_Enabled = enabled;
-    }
-
-    bool ResolvePath(const std::string& requestedVirtualPath, std::string& outReplacementPath)
-    {
-        if (!g_Enabled)
-            return false;
-
-        std::string wanted = ToLower(NormalizeSlashes(requestedVirtualPath));
-        std::filesystem::path wantedPath(wanted);
-        std::string wantedName = ToLower(wantedPath.filename().string());
-
-        for (const auto& redirect : g_Redirects)
+        std::string key = ToLower(Normalize(virtualPath));
+        for (const auto& e : g_Overrides)
         {
-            std::string key = ToLower(NormalizeSlashes(redirect.VirtualPath));
-
-            if (key == wanted || (redirect.IsPackage && key == wantedName))
+            if (!e.Enabled) continue;
+            if (ToLower(Normalize(e.VirtualPath)) == key)
             {
-                outReplacementPath = redirect.ReplacementPath;
+                outFullPath = e.FullPath;
                 return true;
             }
         }
-
         return false;
     }
 
-    const std::vector<RedirectEntry>& GetRedirects()
+    bool HasOverride(const std::string& virtualPath)
     {
-        return g_Redirects;
+        std::string temp;
+        return Resolve(virtualPath, temp);
     }
 
-    const std::string& GetModsFolder()
-    {
-        return g_ModsFolder;
-    }
+    const std::vector<OverrideEntry>& GetOverrides() { return g_Overrides; }
+    const std::string& GetModsFolder() { return g_ModsFolder; }
 }
