@@ -18,18 +18,6 @@ Featuring cinematic boss battles, memorable story moments, and a unique visual s
 
 NarutoStorm2Revived exists to help preserve community knowledge, improve compatibility, document game systems, and provide tools for future research and modding efforts.
 
-The project focuses on:
-
-* Preservation
-* Research
-* Reverse Engineering
-* Documentation
-* Modding Support
-* Tool Development
-* Compatibility Improvements
-* Quality-of-Life Enhancements
-* Community Resources
-
 ---
 
 # Current Features
@@ -47,23 +35,7 @@ The project focuses on:
 * Borderless Windowed Mode
 * Optional Debug Utilities
 
-### Research Features
-
-* File Loading Analysis
-* Memory Research
-* Function Logging
-* Asset Discovery
-* Internal Structure Documentation
-* Game System Research
-
-### Quality-of-Life Features
-
-* FPS Monitoring
-* Stability Improvements
-* Borderless Windowed Support
-* Better Debug Information
-* Modern OS Compatibility
-* Additional Logging Tools
+---
 
 ## Modding Support
 
@@ -78,25 +50,6 @@ The project focuses on:
 * Community Tools
 
 > Some features are still experimental and may contain placeholders while research continues.
-
----
-
-## Research & Documentation
-
-The project actively documents:
-
-* Character Systems
-* Stages
-* Animations
-* Effects
-* Menus
-* Save Data
-* Memory Structures
-* Internal Functions
-* Rendering Systems
-* Audio Systems
-* Networking Research
-* Asset Containers
 
 ---
 
