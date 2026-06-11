@@ -2,6 +2,7 @@
 #include "AssetModelViewer.h"
 #include "Logger.h"
 #include "imgui.h"
+#include "AssetPreviewResolver.h"
 
 namespace
 {
@@ -102,6 +103,19 @@ namespace AssetModelViewer
             size.y = 260.0f;
 
         ImGui::BeginChild("##AssetModelViewer", size, true);
+
+        std::string readablePath;
+        bool hasFile = AssetPreviewResolver::ResolveReadablePath(asset, readablePath, false);
+
+        if (hasFile)
+        {
+            ImGui::TextDisabled("Resolved:");
+            ImGui::TextWrapped("%s", readablePath.c_str());
+        }
+        else
+        {
+            ImGui::TextColored(ImVec4(1.0f, 0.55f, 0.25f, 1.0f), "No extracted/readable file yet.");
+        }
 
         ImDrawList* draw = ImGui::GetWindowDrawList();
         ImVec2 pos = ImGui::GetCursorScreenPos();
