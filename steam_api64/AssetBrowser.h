@@ -30,17 +30,26 @@ namespace AssetBrowser
         std::string RelativePath;
         std::string VirtualPath;
         std::string Extension;
+
         AssetType Type = AssetType::Unknown;
         AssetSource Source = AssetSource::Game;
+
         uintmax_t Size = 0;
+
         bool HasModOverride = false;
         bool IsLooseOverride = false;
         bool IsDumped = false;
+
         std::string OverrideFullPath;
         std::string DumpFullPath;
+
         bool IsCpkEntry = false;
         std::string ArchivePath;
         std::string ArchiveEntryPath;
+
+        std::vector<std::string> Strings;
+        std::vector<std::string> Dependencies;
+        std::vector<std::string> Markers;
     };
 
     struct DumpEntry
@@ -70,22 +79,22 @@ namespace AssetBrowser
     };
 
     bool Init();
-    void Scan();
-    void ScanDumpFolder();
+    void Shutdown();
 
-    bool LoadCache();
-    bool SaveCache();
-    void StartAsyncScan(bool forceFullRefresh = false);
+    void Scan();
+    void StartAsyncScan(bool force = false);
+
     bool IsScanning();
     int GetScanProgress();
     std::string GetScanStatus();
-    bool WasCacheLoaded();
-    void StartAsyncPreload();
-    bool IsPreloading();
-    int GetPreloadProgress();
-    std::string GetPreloadStatus();
 
+    bool WasCacheLoaded();
+    bool LoadCache();
+    bool SaveCache();
+
+    void ScanDumpFolder();
     void DumpToLog();
+
     bool ExportCsv(const std::string& relativeOrFullPath);
 
     bool DumpAsset(const AssetEntry& asset, bool tryExtractArchives = true);
@@ -97,6 +106,7 @@ namespace AssetBrowser
 
     std::string BuildAssetInfoText(const AssetEntry& asset);
     std::string ReadSmallTextFile(const std::string& path, size_t maxBytes = 32768);
+
     bool IsTextPreviewable(const AssetEntry& asset);
     bool IsTexturePreviewable(const AssetEntry& asset);
     bool IsModelPreviewable(const AssetEntry& asset);
@@ -106,9 +116,11 @@ namespace AssetBrowser
     AssetStats GetStats();
 
     const std::string& GetGameFolder();
+    const std::string& GetDataFolder();
     const std::string& GetModsFolder();
     const std::string& GetDumpFolder();
     const std::string& GetToolsFolder();
+    const std::string& GetCacheFolder();
 
     const char* TypeName(AssetType type);
     const char* SourceName(AssetSource source);

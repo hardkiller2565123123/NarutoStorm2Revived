@@ -32,16 +32,16 @@ namespace PatchManager
 
     void ApplySafePatches()
     {
-        Logger::Info("PatchManager ApplySafePatches requested");
+        Logger::Info("PatchManager: ApplySafePatches");
     }
 
     void ApplyDisplayPatches()
     {
-        Logger::Info("PatchManager ApplyDisplayPatches requested");
+        Logger::Info("PatchManager: ApplyDisplayPatches");
     }
 
     void ApplyGameplayPatches()
     {
-        Logger::Info("PatchManager ApplyGameplayPatches requested");
+        Logger::Info("PatchManager: ApplyGameplayPatches");
     }
 }

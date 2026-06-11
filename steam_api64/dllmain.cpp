@@ -22,6 +22,22 @@
 #include "SteamStatsLocal.h"
 #include "AssetModelViewer.h"
 #include "AssetPreloadManager.h"
+#include "LuaManager.h"
+#include "OverlayConsole.h"
+#include "LuaHooks.h"
+#include "PatchManager.h"
+#include "AssetTaskQueue.h"
+#include "AssetRelations.h"
+#include "AssetNotification.h"
+#include "AssetOverrideManager.h"
+#include "AssetHexEditor.h"
+#include "AssetPackageCreator.h"
+#include "AssetFavorites.h"
+#include "AssetDuplicateFinder.h"
+#include "AssetConflictScanner.h"
+#include "AssetBackupManager.h"
+#include "AssetBulkExtractor.h"
+
 
 #include "NS2Config.h"
 #include "AssetBrowser.h"
@@ -63,14 +79,34 @@ static DWORD WINAPI MainThread(LPVOID)
     NS2Config::Init();
 
     ModRedirector::Init();
+    LuaManager::Init();
+    LuaHooks::Init();
+    OverlayConsole::Init();
+    PatchManager::Init();
+
+
     ModRedirector::Scan();
 
     AssetBrowser::Init();
+    AssetRelations::Init();
+    AssetNotification::Init();
+    AssetOverrideManager::Init();
+    AssetHexEditor::Init();
+    AssetPackageCreator::Init();
     AssetBrowser::LoadCache();
     AssetBrowser::StartAsyncScan();
+    AssetFavorites::Init();
+    AssetDuplicateFinder::Init();
+    AssetConflictScanner::Init();
+    AssetBackupManager::Init();
+    AssetBulkExtractor::Init();
+  
+
 
     AssetPreloadManager::Init();
+    AssetTaskQueue::Init();
     AssetPreloadManager::StartFullPreload(false);
+    AssetRelations::Rebuild();
 
     AssetModelViewer::Init();
   
@@ -88,6 +124,9 @@ static DWORD WINAPI MainThread(LPVOID)
 
     Logger::Info("NartuoStorm2Revived initialized");
     return 0;
+
+
+
 }
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
@@ -102,14 +141,33 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
     }
     case DLL_PROCESS_DETACH:
     {
+
+
+        AssetBulkExtractor::Shutdown();
+        AssetBackupManager::Shutdown();
+        AssetConflictScanner::Shutdown();
+        AssetDuplicateFinder::Shutdown();
+        AssetFavorites::Shutdown();
+
+        AssetPackageCreator::Shutdown();
+        AssetHexEditor::Shutdown();
+        AssetOverrideManager::Shutdown();
+        AssetNotification::Shutdown();
+
+        AssetTaskQueue::Shutdown();
         AssetPreloadManager::Shutdown();
         AssetModelViewer::Shutdown();
+        AssetRelations::Shutdown();
 
         NetworkHooks::Shutdown();
         DX11Overlay::Shutdown();
         ModRedirector::Shutdown();
         HookManager::Shutdown();
         Logger::Shutdown();
+        PatchManager::Shutdown();
+        OverlayConsole::Shutdown();
+        LuaHooks::Shutdown();
+        LuaManager::Shutdown();
         break;
     }
     }

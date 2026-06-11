@@ -163,12 +163,31 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AssetBackupManager.h" />
     <ClInclude Include="AssetBrowser.h" />
+    <ClInclude Include="AssetBulkExtractor.h" />
+    <ClInclude Include="AssetConflictScanner.h" />
+    <ClInclude Include="AssetDuplicateFinder.h" />
+    <ClInclude Include="AssetFavorites.h" />
+    <ClInclude Include="AssetHash.h" />
+    <ClInclude Include="AssetHexEditor.h" />
     <ClInclude Include="AssetModelViewer.h" />
+    <ClInclude Include="AssetNotification.h" />
+    <ClInclude Include="AssetOverrideManager.h" />
+    <ClInclude Include="AssetPackageCreator.h" />
     <ClInclude Include="AssetPreloadManager.h" />
     <ClInclude Include="AssetPreview.h" />
+    <ClInclude Include="AssetPreviewResolver.h" />
+    <ClInclude Include="AssetRelations.h" />
+    <ClInclude Include="AssetReport.h" />
+    <ClInclude Include="AssetSearchFilter.h" />
+    <ClInclude Include="AssetTaskQueue.h" />
+    <ClInclude Include="AssetTextureInfo.h" />
+    <ClInclude Include="AssetToolkitUI.h" />
     <ClInclude Include="CpkArchive.h" />
     <ClInclude Include="DX11Overlay.h" />
+    <ClInclude Include="DX11OverlayInternal.h" />
+    <ClInclude Include="DX11OverlayState.h" />
     <ClInclude Include="FakeSteamBase.h" />
     <ClInclude Include="FakeSteamInterfaces.h" />
     <ClInclude Include="HookManager.h" />
@@ -180,11 +199,14 @@
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="LuaHooks.h" />
+    <ClInclude Include="LuaManager.h" />
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="ModLoader.h" />
     <ClInclude Include="ModRedirector.h" />
     <ClInclude Include="NetworkHooks.h" />
     <ClInclude Include="NS2Config.h" />
+    <ClInclude Include="OverlayConsole.h" />
     <ClInclude Include="PatchManager.h" />
     <ClInclude Include="sdk_includes\isteamapplist.h" />
     <ClInclude Include="sdk_includes\isteamapps.h" />
@@ -401,15 +423,46 @@
     <ClInclude Include="SteamStorageLocal.h" />
     <ClInclude Include="SteamVersionLogger.h" />
     <ClInclude Include="WindowedFullscreen.h" />
+    <ClInclude Include="XfbinInspector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssetBackupManager.cpp" />
     <ClCompile Include="AssetBrowser.cpp" />
+    <ClCompile Include="AssetBulkExtractor.cpp" />
+    <ClCompile Include="AssetConflictScanner.cpp" />
+    <ClCompile Include="AssetDuplicateFinder.cpp" />
+    <ClCompile Include="AssetFavorites.cpp" />
+    <ClCompile Include="AssetHash.cpp" />
+    <ClCompile Include="AssetHexEditor.cpp" />
     <ClCompile Include="AssetModelViewer.cpp" />
+    <ClCompile Include="AssetNotification.cpp" />
+    <ClCompile Include="AssetOverrideManager.cpp" />
+    <ClCompile Include="AssetPackageCreator.cpp" />
     <ClCompile Include="AssetPreloadManager.cpp" />
     <ClCompile Include="AssetPreview.cpp" />
+    <ClCompile Include="AssetPreviewResolver.cpp" />
+    <ClCompile Include="AssetRelations.cpp" />
+    <ClCompile Include="AssetReport.cpp" />
+    <ClCompile Include="AssetSearchFilter.cpp" />
+    <ClCompile Include="AssetTaskQueue.cpp" />
+    <ClCompile Include="AssetTextureInfo.cpp" />
+    <ClCompile Include="AssetToolkitUI.cpp" />
     <ClCompile Include="CpkArchive.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="DX11Overlay.cpp" />
+    <ClCompile Include="DX11OverlayCore.cpp" />
+    <ClCompile Include="DX11OverlayHelpers.cpp" />
+    <ClCompile Include="DX11OverlayMenu.cpp" />
+    <ClCompile Include="DX11OverlayPageAssets.cpp" />
+    <ClCompile Include="DX11OverlayPageCamera.cpp" />
+    <ClCompile Include="DX11OverlayPageControls.cpp" />
+    <ClCompile Include="DX11OverlayPageDebug.cpp" />
+    <ClCompile Include="DX11OverlayPageGame.cpp" />
+    <ClCompile Include="DX11OverlayPageGraphics.cpp" />
+    <ClCompile Include="DX11OverlayPageLua.cpp" />
+    <ClCompile Include="DX11OverlayPageMods.cpp" />
+    <ClCompile Include="DX11OverlayPagePatches.cpp" />
+    <ClCompile Include="DX11OverlayState.cpp" />
     <ClCompile Include="exports.cpp" />
     <ClCompile Include="FakeSteamFriends.cpp" />
     <ClCompile Include="FakeSteamGenericInterfaces.cpp" />
@@ -424,10 +477,13 @@
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LuaHooks.cpp" />
+    <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="ModLoader.cpp" />
     <ClCompile Include="ModRedirector.cpp" />
     <ClCompile Include="NetworkHooks.cpp" />
     <ClCompile Include="NS2Config.cpp" />
+    <ClCompile Include="OverlayConsole.cpp" />
     <ClCompile Include="PatchManager.cpp" />
     <ClCompile Include="SteamAuth.cpp" />
     <ClCompile Include="SteamCallbackManager.cpp" />
@@ -448,6 +504,7 @@
     <ClCompile Include="SteamStorageLocal.cpp" />
     <ClCompile Include="SteamVersionLogger.cpp" />
     <ClCompile Include="WindowedFullscreen.cpp" />
+    <ClCompile Include="XfbinInspector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="libMinHook.x64.lib" />
