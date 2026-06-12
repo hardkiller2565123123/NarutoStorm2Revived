@@ -2,6 +2,8 @@
 #include "SteamStorageLocal.h"
 #include "Logger.h"
 
+#include <chrono>
+
 static std::string GetStorageRoot()
 {
     char path[MAX_PATH]{};
@@ -31,6 +33,32 @@ static std::string SafePath(const char* name)
     }
 
     return GetStorageRoot() + file;
+}
+
+static std::vector<std::filesystem::directory_entry> ListStoredFiles()
+{
+    std::vector<std::filesystem::directory_entry> files;
+    std::error_code ec;
+    std::filesystem::path root = GetStorageRoot();
+
+    if (!std::filesystem::exists(root, ec))
+        return files;
+
+    for (const auto& item : std::filesystem::directory_iterator(root, ec))
+    {
+        if (!ec && item.is_regular_file(ec))
+            files.push_back(item);
+    }
+
+    std::sort(
+        files.begin(),
+        files.end(),
+        [](const auto& a, const auto& b)
+        {
+            return a.path().filename().string() < b.path().filename().string();
+        });
+
+    return files;
 }
 
 namespace SteamStorageLocal
@@ -92,5 +120,46 @@ namespace SteamStorageLocal
             return 0;
 
         return static_cast<int32_t>(file.tellg());
+    }
+
+    int64_t Timestamp(const char* name)
+    {
+        std::error_code ec;
+        auto time = std::filesystem::last_write_time(SafePath(name), ec);
+
+        if (ec)
+            return 0;
+
+        auto seconds = std::chrono::duration_cast<std::chrono::seconds>(
+            time.time_since_epoch()).count();
+
+        return static_cast<int64_t>(seconds);
+    }
+
+    int32_t FileCount()
+    {
+        return static_cast<int32_t>(ListStoredFiles().size());
+    }
+
+    const char* FileNameAndSize(int index, int32_t* size)
+    {
+        static std::string s_ReturnName;
+        auto files = ListStoredFiles();
+
+        if (index < 0 || index >= static_cast<int>(files.size()))
+        {
+            if (size) *size = 0;
+            s_ReturnName.clear();
+            return s_ReturnName.c_str();
+        }
+
+        const auto& file = files[index];
+        std::error_code ec;
+
+        if (size)
+            *size = static_cast<int32_t>(file.file_size(ec));
+
+        s_ReturnName = file.path().filename().string();
+        return s_ReturnName.c_str();
     }
 }

@@ -20,6 +20,7 @@
 #include "SteamPersonaManager.h"
 #include "SteamStorageLocal.h"
 #include "SteamStatsLocal.h"
+#include "FakeSteamCore.h"
 #include "AssetModelViewer.h"
 #include "AssetPreloadManager.h"
 #include "LuaManager.h"
@@ -37,6 +38,8 @@
 #include "AssetConflictScanner.h"
 #include "AssetBackupManager.h"
 #include "AssetBulkExtractor.h"
+#include "RuntimeHookBootstrap.h"
+#include "NS2Offsets.h"
 
 
 #include "NS2Config.h"
@@ -50,7 +53,7 @@ static DWORD WINAPI MainThread(LPVOID)
     if (!Logger::Init())
         return 0;
 
-    Logger::Info("NartuoStorm2Revived Steam proxy loaded");
+    Logger::Info("NartuoStorm2Revived offline Steam layer loaded");
 
     if (!SteamProxy::Init())
     {
@@ -72,6 +75,7 @@ static DWORD WINAPI MainThread(LPVOID)
     SteamAuth::Init();
     SteamCallbackManager::Init();
     SteamCallResultManager::Init();
+    FakeSteamCore::Init();
     SteamPersonaManager::Init();
     SteamStorageLocal::Init();
     SteamStatsLocal::Init();
@@ -84,7 +88,7 @@ static DWORD WINAPI MainThread(LPVOID)
     OverlayConsole::Init();
     PatchManager::Init();
 
-
+    NS2Offsets::LogAll();
     ModRedirector::Scan();
 
     AssetBrowser::Init();
@@ -100,6 +104,7 @@ static DWORD WINAPI MainThread(LPVOID)
     AssetConflictScanner::Init();
     AssetBackupManager::Init();
     AssetBulkExtractor::Init();
+    RuntimeHookBootstrap::Init();
   
 
 
@@ -142,7 +147,7 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
     case DLL_PROCESS_DETACH:
     {
 
-
+        RuntimeHookBootstrap::Shutdown();
         AssetBulkExtractor::Shutdown();
         AssetBackupManager::Shutdown();
         AssetConflictScanner::Shutdown();
@@ -160,6 +165,7 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
         AssetRelations::Shutdown();
 
         NetworkHooks::Shutdown();
+        FakeSteamCore::Shutdown();
         DX11Overlay::Shutdown();
         ModRedirector::Shutdown();
         HookManager::Shutdown();

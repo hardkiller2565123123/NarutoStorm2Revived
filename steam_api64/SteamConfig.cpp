@@ -66,13 +66,21 @@ namespace SteamConfig
         if (!std::filesystem::exists(g_Path))
             Save();
 
-        g_Config.CurrentMode = ParseMode(ReadString("mode", "offline"));
+        Mode requestedMode = ParseMode(ReadString("mode", "offline"));
+        if (requestedMode != Mode::Offline)
+        {
+            Logger::Info(
+                std::string("SteamConfig forced offline; ignored requested mode=") +
+                ModeName(requestedMode));
+        }
+
+        g_Config.CurrentMode = Mode::Offline;
         g_Config.PersonaName = ReadString("persona", "NS2Revived");
         g_Config.SteamID = std::strtoull(ReadString("steamid", "76561199006065889").c_str(), nullptr, 10);
         g_Config.CustomServerHost = ReadString("custom_server", "127.0.0.1");
         g_Config.CustomServerPort = ReadInt("custom_port", 27015);
-        g_Config.BlockOfficialTraffic = ReadInt("block_official", 1) != 0;
-        g_Config.LanOnly = ReadInt("lan_only", 1) != 0;
+        g_Config.BlockOfficialTraffic = true;
+        g_Config.LanOnly = true;
         g_Config.LogPackets = ReadInt("log_packets", 1) != 0;
         g_Config.EnableLocalStorage = ReadInt("local_storage", 1) != 0;
         g_Config.EnableLocalStats = ReadInt("local_stats", 1) != 0;

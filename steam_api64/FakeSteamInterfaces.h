@@ -3,6 +3,13 @@
 
 namespace FakeSteamInterfaces
 {
+    void* Client();
+    void* User();
+    void* Utils();
+    void* Apps();
+    void* GameServer();
+    void* GameServerStats();
+
     void* Friends();
     void* Matchmaking();
     void* MatchmakingServers();

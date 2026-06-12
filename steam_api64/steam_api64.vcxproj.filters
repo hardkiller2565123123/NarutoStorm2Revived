@@ -98,6 +98,9 @@
     <Filter Include="Core\Patches\WindoweFullscreen">
       <UniqueIdentifier>{5a427efa-08d0-494b-9fe8-51e07d99b077}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\hooks\Runtime">
+      <UniqueIdentifier>{69924677-4b24-4750-8992-5b41b5029b59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -334,6 +337,24 @@
     </ClCompile>
     <ClCompile Include="AssetPackageCreator.cpp">
       <Filter>Core\Assets\Browser\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeAssetTelemetry.cpp">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeFileHooks.cpp">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeGameHooks.cpp">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeHookAddresses.cpp">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeHookBootstrap.cpp">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="NS2Offsets.cpp">
+      <Filter>Core\hooks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1117,6 +1138,24 @@
     </ClInclude>
     <ClInclude Include="AssetPackageCreator.h">
       <Filter>Core\Assets\Browser\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeAssetTelemetry.h">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeFileHooks.h">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeGameHooks.h">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeHookAddresses.h">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeHookBootstrap.h">
+      <Filter>Core\hooks\Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="NS2Offsets.h">
+      <Filter>Core\hooks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

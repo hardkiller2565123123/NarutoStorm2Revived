@@ -14,6 +14,10 @@ namespace SteamStatsLocal
     bool GetAchievement(const char* name, bool* achieved);
     bool SetAchievement(const char* name);
     bool ClearAchievement(const char* name);
+    uint32_t GetAchievementCount();
+    const char* GetAchievementName(uint32_t index);
+
+    bool ResetAll(bool achievementsToo);
 
     void Save();
 }

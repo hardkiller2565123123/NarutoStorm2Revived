@@ -79,9 +79,8 @@ public:
 
     virtual int64_t GetFileTimestamp(const char* file)
     {
-        NSR_UNUSED(file);
         Logger::Info("SteamRemoteStorage::GetFileTimestamp");
-        return 0;
+        return SteamStorageLocal::Timestamp(file);
     }
 
     virtual int GetSyncPlatforms(const char* file)
@@ -94,15 +93,13 @@ public:
     virtual int32_t GetFileCount()
     {
         Logger::Info("SteamRemoteStorage::GetFileCount");
-        return 0;
+        return SteamStorageLocal::FileCount();
     }
 
     virtual const char* GetFileNameAndSize(int index, int32_t* size)
     {
-        NSR_UNUSED(index);
         Logger::Info("SteamRemoteStorage::GetFileNameAndSize");
-        if (size) *size = 0;
-        return "";
+        return SteamStorageLocal::FileNameAndSize(index, size);
     }
 
     virtual bool GetQuota(uint64_t* total, uint64_t* available)

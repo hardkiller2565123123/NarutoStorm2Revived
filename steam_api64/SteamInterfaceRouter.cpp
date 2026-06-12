@@ -1,8 +1,11 @@
 #include "StdInc.h"
 #include "SteamInterfaceRouter.h"
 #include "FakeSteamInterfaces.h"
+#include "FakeSteamCore.h"
 #include "SteamVersionLogger.h"
 #include "Logger.h"
+
+#include <cctype>
 
 extern "C" void* __cdecl NS2Revived_SteamNetworking();
 extern "C" void* __cdecl NS2Revived_SteamGameServerNetworking();
@@ -11,33 +14,55 @@ extern "C" void* __cdecl NS2Revived_SteamNetworkingMessages();
 extern "C" void* __cdecl NS2Revived_SteamNetworkingSockets();
 extern "C" void* __cdecl NS2Revived_SteamGameServerNetworkingSockets();
 
+static std::string UpperInterfaceName(std::string value)
+{
+    std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) {
+        return static_cast<char>(std::toupper(c));
+    });
+    return value;
+}
+
+static bool HasInterface(const std::string& value, const char* token)
+{
+    return value.find(token) != std::string::npos;
+}
+
 static void* RouteCommon(const std::string& v)
 {
-    if (v.find("SteamFriends") != std::string::npos) return FakeSteamInterfaces::Friends();
-    if (v.find("SteamMatchMakingServers") != std::string::npos) return FakeSteamInterfaces::MatchmakingServers();
-    if (v.find("SteamMatchMaking") != std::string::npos) return FakeSteamInterfaces::Matchmaking();
-    if (v.find("SteamUserStats") != std::string::npos) return FakeSteamInterfaces::UserStats();
-    if (v.find("SteamRemoteStorage") != std::string::npos) return FakeSteamInterfaces::RemoteStorage();
-    if (v.find("SteamScreenshots") != std::string::npos) return FakeSteamInterfaces::Screenshots();
-    if (v.find("STEAMHTTP") != std::string::npos || v.find("SteamHTTP") != std::string::npos) return FakeSteamInterfaces::HTTP();
-    if (v.find("SteamController") != std::string::npos) return FakeSteamInterfaces::Controller();
-    if (v.find("STEAMUGC") != std::string::npos || v.find("SteamUGC") != std::string::npos) return FakeSteamInterfaces::UGC();
-    if (v.find("STEAMAPPLIST") != std::string::npos || v.find("SteamAppList") != std::string::npos) return FakeSteamInterfaces::AppList();
-    if (v.find("STEAMMUSICREMOTE") != std::string::npos || v.find("SteamMusicRemote") != std::string::npos) return FakeSteamInterfaces::MusicRemote();
-    if (v.find("STEAMMUSIC") != std::string::npos || v.find("SteamMusic") != std::string::npos) return FakeSteamInterfaces::Music();
-    if (v.find("STEAMHTMLSURFACE") != std::string::npos || v.find("SteamHTMLSurface") != std::string::npos) return FakeSteamInterfaces::HTMLSurface();
-    if (v.find("STEAMINVENTORY") != std::string::npos || v.find("SteamInventory") != std::string::npos) return FakeSteamInterfaces::Inventory();
-    if (v.find("STEAMVIDEO") != std::string::npos || v.find("SteamVideo") != std::string::npos) return FakeSteamInterfaces::Video();
-    if (v.find("STEAMPARENTALSETTINGS") != std::string::npos || v.find("SteamParentalSettings") != std::string::npos) return FakeSteamInterfaces::ParentalSettings();
-    if (v.find("SteamGameSearch") != std::string::npos) return FakeSteamInterfaces::GameSearch();
-    if (v.find("SteamInput") != std::string::npos) return FakeSteamInterfaces::Input();
-    if (v.find("SteamParties") != std::string::npos) return FakeSteamInterfaces::Parties();
-    if (v.find("SteamRemotePlay") != std::string::npos) return FakeSteamInterfaces::RemotePlay();
+    std::string u = UpperInterfaceName(v);
 
-    if (v.find("SteamNetworkingMessages") != std::string::npos) return NS2Revived_SteamNetworkingMessages();
-    if (v.find("SteamNetworkingSockets") != std::string::npos) return NS2Revived_SteamNetworkingSockets();
-    if (v.find("SteamNetworkingUtils") != std::string::npos) return NS2Revived_SteamNetworkingUtils();
-    if (v.find("SteamNetworking") != std::string::npos) return NS2Revived_SteamNetworking();
+    if (HasInterface(u, "STEAMNETWORKINGMESSAGES")) return NS2Revived_SteamNetworkingMessages();
+    if (HasInterface(u, "STEAMNETWORKINGSOCKETS")) return NS2Revived_SteamNetworkingSockets();
+    if (HasInterface(u, "STEAMNETWORKINGUTILS")) return NS2Revived_SteamNetworkingUtils();
+    if (HasInterface(u, "STEAMNETWORKING")) return NS2Revived_SteamNetworking();
+
+    if (HasInterface(u, "STEAMFRIENDS")) return FakeSteamInterfaces::Friends();
+    if (HasInterface(u, "STEAMMATCHMAKINGSERVERS")) return FakeSteamInterfaces::MatchmakingServers();
+    if (HasInterface(u, "STEAMMATCHMAKING")) return FakeSteamInterfaces::Matchmaking();
+    if (HasInterface(u, "STEAMREMOTESTORAGE")) return FakeSteamInterfaces::RemoteStorage();
+    if (HasInterface(u, "STEAMSCREENSHOTS")) return FakeSteamInterfaces::Screenshots();
+    if (HasInterface(u, "STEAMHTTP")) return FakeSteamInterfaces::HTTP();
+    if (HasInterface(u, "STEAMCONTROLLER")) return FakeSteamInterfaces::Controller();
+    if (HasInterface(u, "STEAMUGC")) return FakeSteamInterfaces::UGC();
+    if (HasInterface(u, "STEAMAPPLIST")) return FakeSteamInterfaces::AppList();
+    if (HasInterface(u, "STEAMMUSICREMOTE")) return FakeSteamInterfaces::MusicRemote();
+    if (HasInterface(u, "STEAMMUSIC")) return FakeSteamInterfaces::Music();
+    if (HasInterface(u, "STEAMHTMLSURFACE")) return FakeSteamInterfaces::HTMLSurface();
+    if (HasInterface(u, "STEAMINVENTORY")) return FakeSteamInterfaces::Inventory();
+    if (HasInterface(u, "STEAMVIDEO")) return FakeSteamInterfaces::Video();
+    if (HasInterface(u, "STEAMPARENTALSETTINGS")) return FakeSteamInterfaces::ParentalSettings();
+    if (HasInterface(u, "STEAMGAMESEARCH")) return FakeSteamInterfaces::GameSearch();
+    if (HasInterface(u, "STEAMINPUT")) return FakeSteamInterfaces::Input();
+    if (HasInterface(u, "STEAMPARTIES")) return FakeSteamInterfaces::Parties();
+    if (HasInterface(u, "STEAMREMOTEPLAY")) return FakeSteamInterfaces::RemotePlay();
+
+    if (HasInterface(u, "STEAMCLIENT")) return FakeSteamCore::Client();
+    if (HasInterface(u, "STEAMGAMESERVERSTATS")) return FakeSteamCore::GameServerStats();
+    if (HasInterface(u, "STEAMGAMESERVER")) return FakeSteamCore::GameServer();
+    if (HasInterface(u, "STEAMUSERSTATS")) return FakeSteamInterfaces::UserStats();
+    if (HasInterface(u, "STEAMUSER")) return FakeSteamCore::User();
+    if (HasInterface(u, "STEAMUTILS")) return FakeSteamCore::Utils();
+    if (HasInterface(u, "STEAMAPPS")) return FakeSteamCore::Apps();
 
     return nullptr;
 }
@@ -70,10 +95,12 @@ namespace SteamInterfaceRouter
 
         std::string v = version ? version : "";
 
-        if (v.find("SteamNetworkingSockets") != std::string::npos)
+        std::string u = UpperInterfaceName(v);
+
+        if (HasInterface(u, "STEAMNETWORKINGSOCKETS"))
             return NS2Revived_SteamGameServerNetworkingSockets();
 
-        if (v.find("SteamNetworking") != std::string::npos)
+        if (HasInterface(u, "STEAMNETWORKING"))
             return NS2Revived_SteamGameServerNetworking();
 
         return RouteCommon(v);
