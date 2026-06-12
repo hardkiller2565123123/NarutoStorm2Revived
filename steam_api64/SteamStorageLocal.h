@@ -10,4 +10,7 @@ namespace SteamStorageLocal
     bool Exists(const char* name);
     bool DeleteFileLocal(const char* name);
     int32_t Size(const char* name);
+    int64_t Timestamp(const char* name);
+    int32_t FileCount();
+    const char* FileNameAndSize(int index, int32_t* size);
 }

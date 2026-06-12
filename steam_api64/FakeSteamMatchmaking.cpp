@@ -5,6 +5,7 @@
 #include "SteamSessionManager.h"
 #include "SteamCallResultManager.h"
 #include "SteamCallbackManager.h"
+#include "SteamIDManager.h"
 
 static CSteamID g_LastLobbyListResult = 0;
 
@@ -272,9 +273,8 @@ public:
 
     virtual int GetLobbyDataCount(CSteamID lobbyID)
     {
-        NSR_UNUSED(lobbyID);
         Logger::Info("SteamMatchmaking::GetLobbyDataCount");
-        return 0;
+        return SteamLobbyManager::GetDataCount(lobbyID);
     }
 
     virtual bool GetLobbyDataByIndex(
@@ -285,27 +285,39 @@ public:
         char* value,
         int valueSize)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(index);
-
         Logger::Info("SteamMatchmaking::GetLobbyDataByIndex");
 
+        std::string keyText;
+        std::string valueText;
+
+        if (!SteamLobbyManager::GetDataByIndex(lobbyID, index, keyText, valueText))
+        {
+            if (key && keySize > 0)
+                key[0] = '\0';
+
+            if (value && valueSize > 0)
+                value[0] = '\0';
+
+            return false;
+        }
+
         if (key && keySize > 0)
-            key[0] = '\0';
+        {
+            strncpy_s(key, static_cast<size_t>(keySize), keyText.c_str(), _TRUNCATE);
+        }
 
         if (value && valueSize > 0)
-            value[0] = '\0';
+        {
+            strncpy_s(value, static_cast<size_t>(valueSize), valueText.c_str(), _TRUNCATE);
+        }
 
-        return false;
+        return true;
     }
 
     virtual bool DeleteLobbyData(CSteamID lobbyID, const char* key)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(key);
-
         Logger::Info("SteamMatchmaking::DeleteLobbyData");
-        return true;
+        return SteamLobbyManager::DeleteData(lobbyID, key ? key : "");
     }
 
     virtual const char* GetLobbyMemberData(
@@ -313,12 +325,8 @@ public:
         CSteamID user,
         const char* key)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(user);
-        NSR_UNUSED(key);
-
         Logger::Info("SteamMatchmaking::GetLobbyMemberData");
-        return "";
+        return SteamLobbyManager::GetMemberData(lobbyID, user, key ? key : "");
     }
 
     virtual void SetLobbyMemberData(
@@ -326,11 +334,12 @@ public:
         const char* key,
         const char* value)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(key);
-        NSR_UNUSED(value);
-
         Logger::Info("SteamMatchmaking::SetLobbyMemberData");
+        SteamLobbyManager::SetMemberData(
+            lobbyID,
+            SteamIDManager::GetLocalSteamID(),
+            key ? key : "",
+            value ? value : "");
     }
 
     virtual bool SendLobbyChatMsg(
@@ -338,12 +347,13 @@ public:
         const void* msgBody,
         int msgBodySize)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(msgBody);
-        NSR_UNUSED(msgBodySize);
-
         Logger::Info("SteamMatchmaking::SendLobbyChatMsg");
-        return true;
+        return SteamLobbyManager::AddChatEntry(
+            lobbyID,
+            SteamIDManager::GetLocalSteamID(),
+            msgBody,
+            msgBodySize,
+            1) >= 0;
     }
 
     virtual int GetLobbyChatEntry(
@@ -354,27 +364,15 @@ public:
         int dataSize,
         int* chatEntryType)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(chatID);
-
         Logger::Info("SteamMatchmaking::GetLobbyChatEntry");
-
-        if (user)
-            *user = 0;
-
-        if (data && dataSize > 0)
-            reinterpret_cast<char*>(data)[0] = '\0';
-
-        if (chatEntryType)
-            *chatEntryType = 0;
-
-        return 0;
+        return SteamLobbyManager::GetChatEntry(lobbyID, chatID, user, data, dataSize, chatEntryType);
     }
 
     virtual bool RequestLobbyData(CSteamID lobbyID)
     {
-        NSR_UNUSED(lobbyID);
         Logger::Info("SteamMatchmaking::RequestLobbyData");
+        uint64_t id = lobbyID;
+        SteamCallbackManager::PushCallback(505, &id, sizeof(id));
         return true;
     }
 
@@ -384,12 +382,8 @@ public:
         uint16_t gameServerPort,
         CSteamID steamIDGameServer)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(gameServerIP);
-        NSR_UNUSED(gameServerPort);
-        NSR_UNUSED(steamIDGameServer);
-
         Logger::Info("SteamMatchmaking::SetLobbyGameServer");
+        SteamLobbyManager::SetGameServer(lobbyID, gameServerIP, gameServerPort, steamIDGameServer);
     }
 
     virtual bool GetLobbyGameServer(
@@ -399,67 +393,44 @@ public:
         CSteamID* steamIDGameServer)
     {
         Logger::Info("SteamMatchmaking::GetLobbyGameServer");
-
-        if (gameServerIP)
-            *gameServerIP = 0x7F000001;
-
-        if (gameServerPort)
-            *gameServerPort = 47584;
-
-        if (steamIDGameServer)
-            *steamIDGameServer = lobbyID;
-
-        return true;
+        return SteamLobbyManager::GetGameServer(lobbyID, gameServerIP, gameServerPort, steamIDGameServer);
     }
 
     virtual bool SetLobbyMemberLimit(CSteamID lobbyID, int maxMembers)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(maxMembers);
-
         Logger::Info("SteamMatchmaking::SetLobbyMemberLimit");
-        return true;
+        return SteamLobbyManager::SetMemberLimit(lobbyID, maxMembers);
     }
 
     virtual int GetLobbyMemberLimit(CSteamID lobbyID)
     {
-        NSR_UNUSED(lobbyID);
-
         Logger::Info("SteamMatchmaking::GetLobbyMemberLimit");
-        return 8;
+        return SteamLobbyManager::GetMemberLimit(lobbyID);
     }
 
     virtual bool SetLobbyType(CSteamID lobbyID, int lobbyType)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(lobbyType);
-
         Logger::Info("SteamMatchmaking::SetLobbyType");
-        return true;
+        return SteamLobbyManager::SetType(lobbyID, lobbyType);
     }
 
     virtual bool SetLobbyJoinable(CSteamID lobbyID, bool joinable)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(joinable);
-
         Logger::Info("SteamMatchmaking::SetLobbyJoinable");
-        return true;
+        return SteamLobbyManager::SetJoinable(lobbyID, joinable);
     }
 
     virtual CSteamID GetLobbyOwner(CSteamID lobbyID)
     {
         Logger::Info("SteamMatchmaking::GetLobbyOwner");
-        return lobbyID;
+        CSteamID owner = SteamLobbyManager::GetOwner(lobbyID);
+        return owner ? owner : lobbyID;
     }
 
     virtual bool SetLobbyOwner(CSteamID lobbyID, CSteamID newOwner)
     {
-        NSR_UNUSED(lobbyID);
-        NSR_UNUSED(newOwner);
-
         Logger::Info("SteamMatchmaking::SetLobbyOwner");
-        return true;
+        return SteamLobbyManager::SetOwner(lobbyID, newOwner);
     }
 
     virtual bool SetLinkedLobby(CSteamID lobbyID, CSteamID linkedLobbyID)

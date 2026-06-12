@@ -1,5 +1,6 @@
 #include "StdInc.h"
 #include "Logger.h"
+#include "SteamIDManager.h"
 
 #include <WinSock2.h>
 #include <Ws2tcpip.h>
@@ -48,6 +49,22 @@ private:
 
     std::mutex packetMutex;
     std::vector<QueuedPacket> packets;
+
+private:
+    void QueuePacket(CSteamID sender, const void* data, uint32_t size, int channel)
+    {
+        if (!data || size == 0)
+            return;
+
+        QueuedPacket packet{};
+        packet.sender = sender;
+        packet.channel = channel;
+        packet.data.resize(size);
+        memcpy(packet.data.data(), data, size);
+
+        std::lock_guard<std::mutex> lock(packetMutex);
+        packets.push_back(packet);
+    }
 
 private:
     bool EnsureSocket()
@@ -145,9 +162,7 @@ private:
                 packet.data.data(),
                 buffer + 24,
                 size);
-
-            std::lock_guard<std::mutex> lock(packetMutex);
-            packets.push_back(packet);
+            QueuePacket(packet.sender, packet.data.data(), static_cast<uint32_t>(packet.data.size()), packet.channel);
 
             Logger::Info(
                 "NS2SteamNetworking: packet received size=" +
@@ -188,13 +203,17 @@ public:
             reinterpret_cast<sockaddr*>(&serverAddress),
             sizeof(serverAddress));
 
+        QueuePacket(steamIDRemote ? steamIDRemote : SteamIDManager::GetLocalSteamID(), data, size, channel);
+
         Logger::Info(
-            "NS2SteamNetworking: SendP2PPacket redirected size=" +
+            "NS2SteamNetworking: SendP2PPacket emulated size=" +
             std::to_string(size) +
             " channel=" +
-            std::to_string(channel));
+            std::to_string(channel) +
+            " udp=" +
+            std::to_string(sent > 0 ? 1 : 0));
 
-        return sent > 0;
+        return true;
     }
 
     bool SendP2PPacket(

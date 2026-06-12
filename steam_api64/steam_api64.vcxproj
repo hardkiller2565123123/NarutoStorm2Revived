@@ -70,20 +70,36 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)sdk_includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;user32.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -98,16 +114,20 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)sdk_includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;user32.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -120,16 +140,20 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)sdk_includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;user32.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -144,16 +168,20 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)sdk_includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>d3d11.lib;dxgi.lib;d3dcompiler.lib;user32.lib;libMinHook.x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib;$(ProjectDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -189,6 +217,7 @@
     <ClInclude Include="DX11OverlayInternal.h" />
     <ClInclude Include="DX11OverlayState.h" />
     <ClInclude Include="FakeSteamBase.h" />
+    <ClInclude Include="FakeSteamCore.h" />
     <ClInclude Include="FakeSteamInterfaces.h" />
     <ClInclude Include="HookManager.h" />
     <ClInclude Include="imconfig.h" />
@@ -206,8 +235,14 @@
     <ClInclude Include="ModRedirector.h" />
     <ClInclude Include="NetworkHooks.h" />
     <ClInclude Include="NS2Config.h" />
+    <ClInclude Include="NS2Offsets.h" />
     <ClInclude Include="OverlayConsole.h" />
     <ClInclude Include="PatchManager.h" />
+    <ClInclude Include="RuntimeAssetTelemetry.h" />
+    <ClInclude Include="RuntimeFileHooks.h" />
+    <ClInclude Include="RuntimeGameHooks.h" />
+    <ClInclude Include="RuntimeHookAddresses.h" />
+    <ClInclude Include="RuntimeHookBootstrap.h" />
     <ClInclude Include="sdk_includes\isteamapplist.h" />
     <ClInclude Include="sdk_includes\isteamapps.h" />
     <ClInclude Include="sdk_includes\isteamapps001.h" />
@@ -464,6 +499,7 @@
     <ClCompile Include="DX11OverlayPagePatches.cpp" />
     <ClCompile Include="DX11OverlayState.cpp" />
     <ClCompile Include="exports.cpp" />
+    <ClCompile Include="FakeSteamCore.cpp" />
     <ClCompile Include="FakeSteamFriends.cpp" />
     <ClCompile Include="FakeSteamGenericInterfaces.cpp" />
     <ClCompile Include="FakeSteamMatchmaking.cpp" />
@@ -483,8 +519,14 @@
     <ClCompile Include="ModRedirector.cpp" />
     <ClCompile Include="NetworkHooks.cpp" />
     <ClCompile Include="NS2Config.cpp" />
+    <ClCompile Include="NS2Offsets.cpp" />
     <ClCompile Include="OverlayConsole.cpp" />
     <ClCompile Include="PatchManager.cpp" />
+    <ClCompile Include="RuntimeAssetTelemetry.cpp" />
+    <ClCompile Include="RuntimeFileHooks.cpp" />
+    <ClCompile Include="RuntimeGameHooks.cpp" />
+    <ClCompile Include="RuntimeHookAddresses.cpp" />
+    <ClCompile Include="RuntimeHookBootstrap.cpp" />
     <ClCompile Include="SteamAuth.cpp" />
     <ClCompile Include="SteamCallbackManager.cpp" />
     <ClCompile Include="SteamCallResultManager.cpp" />

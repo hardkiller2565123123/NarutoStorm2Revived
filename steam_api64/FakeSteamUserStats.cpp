@@ -114,14 +114,13 @@ public:
     virtual uint32_t GetNumAchievements()
     {
         Logger::Info("SteamUserStats::GetNumAchievements");
-        return 0;
+        return SteamStatsLocal::GetAchievementCount();
     }
 
     virtual const char* GetAchievementName(uint32_t achievement)
     {
-        NSR_UNUSED(achievement);
         Logger::Info("SteamUserStats::GetAchievementName");
-        return "";
+        return SteamStatsLocal::GetAchievementName(achievement);
     }
 
     virtual SteamAPICall_t RequestUserStats(CSteamID user)
@@ -169,9 +168,8 @@ public:
 
     virtual bool ResetAllStats(bool achievementsToo)
     {
-        NSR_UNUSED(achievementsToo);
         Logger::Info("SteamUserStats::ResetAllStats");
-        return true;
+        return SteamStatsLocal::ResetAll(achievementsToo);
     }
 
     virtual SteamAPICall_t FindOrCreateLeaderboard(const char* name, int sortMethod, int displayType)

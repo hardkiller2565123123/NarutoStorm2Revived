@@ -1,8 +1,11 @@
 #include "StdInc.h"
-#include "SteamProxy.h"
 #include "Logger.h"
 #include "FakeSteamInterfaces.h"
-#include "SteamCoreForwarders.h"
+#include "FakeSteamCore.h"
+#include "SteamAuth.h"
+#include "SteamCallbackManager.h"
+#include "SteamCallResultManager.h"
+#include "SteamIDManager.h"
 #include "SteamInterfaceRouter.h"
 
 extern "C" void* __cdecl NS2Revived_SteamNetworking();
@@ -12,156 +15,110 @@ extern "C" void* __cdecl NS2Revived_SteamNetworkingMessages();
 extern "C" void* __cdecl NS2Revived_SteamNetworkingSockets();
 extern "C" void* __cdecl NS2Revived_SteamGameServerNetworkingSockets();
 
-#define RESOLVE_STEAM_EXPORT(name, type) \
-    static type fn = nullptr; \
-    if (!fn) \
-    { \
-        fn = reinterpret_cast<type>(SteamProxy::GetExport(#name)); \
-        if (fn) Logger::ExportInitialized(#name); \
-        else Logger::Error(std::string(#name) + ": export not found"); \
-    }
-
-#define FORWARD_VOID(name) \
-extern "C" __declspec(dllexport) void __cdecl name() \
-{ \
-    typedef void(__cdecl* Fn)(); \
-    RESOLVE_STEAM_EXPORT(name, Fn); \
-    if (fn) fn(); \
-}
-
-#define FORWARD_BOOL(name) \
-extern "C" __declspec(dllexport) bool __cdecl name() \
-{ \
-    typedef bool(__cdecl* Fn)(); \
-    RESOLVE_STEAM_EXPORT(name, Fn); \
-    return fn ? fn() : false; \
-}
-
 extern "C" __declspec(dllexport)
 bool __cdecl SteamAPI_Init()
 {
-    typedef bool(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_Init, Fn);
-    return fn ? fn() : false;
+    Logger::Info("SteamAPI_Init: offline emulation success");
+    return FakeSteamCore::Init();
 }
 
 extern "C" __declspec(dllexport)
 bool __cdecl SteamAPI_InitSafe()
 {
-    typedef bool(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_InitSafe, Fn);
-    return fn ? fn() : false;
+    Logger::Info("SteamAPI_InitSafe: offline emulation success");
+    return FakeSteamCore::Init();
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamAPI_Shutdown()
 {
-    typedef void(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_Shutdown, Fn);
-    if (fn) fn();
+    Logger::Info("SteamAPI_Shutdown: offline emulation");
 }
 
-FORWARD_VOID(SteamAPI_RunCallbacks)
-FORWARD_VOID(SteamAPI_ReleaseCurrentThreadMemory)
-FORWARD_VOID(SteamAPI_ManualDispatch_Init)
-FORWARD_VOID(SteamAPI_ManualDispatch_RunFrame)
-FORWARD_BOOL(SteamAPI_IsSteamRunning)
-FORWARD_BOOL(SteamAPI_IsSteamRunningOnSteamDeck)
+extern "C" __declspec(dllexport) void __cdecl SteamAPI_RunCallbacks() { SteamCallbackManager::RunCallbacks(); }
+extern "C" __declspec(dllexport) void __cdecl SteamAPI_ReleaseCurrentThreadMemory() {}
+extern "C" __declspec(dllexport) void __cdecl SteamAPI_ManualDispatch_Init() {}
+extern "C" __declspec(dllexport) void __cdecl SteamAPI_ManualDispatch_RunFrame(HSteamPipe pipe)
+{
+    NSR_UNUSED(pipe);
+    SteamCallbackManager::RunCallbacks();
+}
+extern "C" __declspec(dllexport) bool __cdecl SteamAPI_IsSteamRunning() { return true; }
+extern "C" __declspec(dllexport) bool __cdecl SteamAPI_IsSteamRunningOnSteamDeck() { return false; }
 
 extern "C" __declspec(dllexport)
 bool __cdecl SteamAPI_RestartAppIfNecessary(AppId_t appId)
 {
-    typedef bool(__cdecl* Fn)(AppId_t);
-    RESOLVE_STEAM_EXPORT(SteamAPI_RestartAppIfNecessary, Fn);
-    return fn ? fn(appId) : false;
+    NSR_UNUSED(appId);
+    return false;
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamAPI_RegisterCallback(void* callback, int callbackId)
 {
-    typedef void(__cdecl* Fn)(void*, int);
-    RESOLVE_STEAM_EXPORT(SteamAPI_RegisterCallback, Fn);
-    if (fn) fn(callback, callbackId);
+    SteamCallbackManager::RegisterCallback(callback, callbackId);
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamAPI_UnregisterCallback(void* callback)
 {
-    typedef void(__cdecl* Fn)(void*);
-    RESOLVE_STEAM_EXPORT(SteamAPI_UnregisterCallback, Fn);
-    if (fn) fn(callback);
+    SteamCallbackManager::UnregisterCallback(callback);
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamAPI_RegisterCallResult(void* callback, SteamAPICall_t call)
 {
-    typedef void(__cdecl* Fn)(void*, SteamAPICall_t);
-    RESOLVE_STEAM_EXPORT(SteamAPI_RegisterCallResult, Fn);
-    if (fn) fn(callback, call);
+    SteamCallResultManager::RegisterCallResult(callback, call);
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamAPI_UnregisterCallResult(void* callback, SteamAPICall_t call)
 {
-    typedef void(__cdecl* Fn)(void*, SteamAPICall_t);
-    RESOLVE_STEAM_EXPORT(SteamAPI_UnregisterCallResult, Fn);
-    if (fn) fn(callback, call);
+    SteamCallResultManager::UnregisterCallResult(callback, call);
 }
 
 extern "C" __declspec(dllexport)
 HSteamUser __cdecl SteamAPI_GetHSteamUser()
 {
-    typedef HSteamUser(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_GetHSteamUser, Fn);
-    return fn ? fn() : 0;
+    return FakeSteamCore::UserHandle();
 }
 
 extern "C" __declspec(dllexport)
 HSteamPipe __cdecl SteamAPI_GetHSteamPipe()
 {
-    typedef HSteamPipe(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_GetHSteamPipe, Fn);
-    return fn ? fn() : 0;
+    return FakeSteamCore::PipeHandle();
 }
 
 extern "C" __declspec(dllexport)
 HSteamPipe __cdecl SteamAPI_GetHSteamPipeDeprecated()
 {
-    typedef HSteamPipe(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_GetHSteamPipeDeprecated, Fn);
-    return fn ? fn() : 0;
+    return FakeSteamCore::PipeHandle();
 }
 
 extern "C" __declspec(dllexport)
 const char* __cdecl SteamAPI_GetSteamInstallPath()
 {
-    typedef const char* (__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_GetSteamInstallPath, Fn);
-    return fn ? fn() : "";
+    return FakeSteamCore::InstallPath();
 }
 
 extern "C" __declspec(dllexport)
 uint64_t __cdecl SteamAPI_GetUserSteamID()
 {
-    typedef uint64_t(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamAPI_GetUserSteamID, Fn);
-    return fn ? fn() : 0;
+    return SteamIDManager::GetSteamID64();
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamAPI_ManualDispatch_FreeLastCallback(HSteamPipe pipe)
 {
-    typedef void(__cdecl* Fn)(HSteamPipe);
-    RESOLVE_STEAM_EXPORT(SteamAPI_ManualDispatch_FreeLastCallback, Fn);
-    if (fn) fn(pipe);
+    NSR_UNUSED(pipe);
 }
 
 extern "C" __declspec(dllexport)
 bool __cdecl SteamAPI_ManualDispatch_GetNextCallback(HSteamPipe pipe, void* callbackMsg)
 {
-    typedef bool(__cdecl* Fn)(HSteamPipe, void*);
-    RESOLVE_STEAM_EXPORT(SteamAPI_ManualDispatch_GetNextCallback, Fn);
-    return fn ? fn(pipe, callbackMsg) : false;
+    NSR_UNUSED(pipe);
+    NSR_UNUSED(callbackMsg);
+    return false;
 }
 
 extern "C" __declspec(dllexport)
@@ -173,16 +130,18 @@ bool __cdecl SteamAPI_ManualDispatch_GetAPICallResult(
     int callbackExpected,
     bool* failed)
 {
-    typedef bool(__cdecl* Fn)(HSteamPipe, SteamAPICall_t, void*, int, int, bool*);
-    RESOLVE_STEAM_EXPORT(SteamAPI_ManualDispatch_GetAPICallResult, Fn);
-    return fn ? fn(pipe, call, callback, callbackSize, callbackExpected, failed) : false;
+    NSR_UNUSED(pipe);
+    if (failed) *failed = false;
+    int actualCallback = 0;
+    bool ok = SteamCallResultManager::GetData(call, callback, callbackSize, &actualCallback);
+    return ok && (callbackExpected == 0 || actualCallback == callbackExpected);
 }
 
-// Real/core ownership path
-extern "C" __declspec(dllexport) void* __cdecl SteamClient() { return SteamCoreForwarders::Client(); }
-extern "C" __declspec(dllexport) void* __cdecl SteamUser() { return SteamCoreForwarders::User(); }
-extern "C" __declspec(dllexport) void* __cdecl SteamUtils() { return SteamCoreForwarders::Utils(); }
-extern "C" __declspec(dllexport) void* __cdecl SteamApps() { return SteamCoreForwarders::Apps(); }
+// Offline core ownership path
+extern "C" __declspec(dllexport) void* __cdecl SteamClient() { return FakeSteamCore::Client(); }
+extern "C" __declspec(dllexport) void* __cdecl SteamUser() { return FakeSteamCore::User(); }
+extern "C" __declspec(dllexport) void* __cdecl SteamUtils() { return FakeSteamCore::Utils(); }
+extern "C" __declspec(dllexport) void* __cdecl SteamApps() { return FakeSteamCore::Apps(); }
 
 // Fake/emulated interfaces
 extern "C" __declspec(dllexport) void* __cdecl SteamFriends() { return FakeSteamInterfaces::Friends(); }
@@ -212,6 +171,81 @@ extern "C" __declspec(dllexport) void* __cdecl SteamNetworkingMessages() { retur
 extern "C" __declspec(dllexport) void* __cdecl SteamNetworkingSockets() { return NS2Revived_SteamNetworkingSockets(); }
 extern "C" __declspec(dllexport) void* __cdecl SteamNetworkingUtils() { return NS2Revived_SteamNetworkingUtils(); }
 
+#define EXPORT_STEAM_ACCESSOR(name, target) \
+extern "C" __declspec(dllexport) void* __cdecl name() { return target; }
+
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUser_v023, FakeSteamCore::User())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUser_v022, FakeSteamCore::User())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUser_v021, FakeSteamCore::User())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUser_v020, FakeSteamCore::User())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamFriends_v017, FakeSteamInterfaces::Friends())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUtils_v010, FakeSteamCore::Utils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerUtils_v010, FakeSteamCore::Utils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUtils_v009, FakeSteamCore::Utils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerUtils_v009, FakeSteamCore::Utils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamMatchmaking_v009, FakeSteamInterfaces::Matchmaking())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamMatchmakingServers_v002, FakeSteamInterfaces::MatchmakingServers())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameSearch_v001, FakeSteamInterfaces::GameSearch())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamParties_v002, FakeSteamInterfaces::Parties())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamRemoteStorage_v014, FakeSteamInterfaces::RemoteStorage())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamRemoteStorage_v016, FakeSteamInterfaces::RemoteStorage())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUserStats_v012, FakeSteamInterfaces::UserStats())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUserStats_v011, FakeSteamInterfaces::UserStats())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamApps_v008, FakeSteamCore::Apps())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerApps_v008, FakeSteamCore::Apps())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworking_v006, NS2Revived_SteamNetworking())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworking_v006, NS2Revived_SteamGameServerNetworking())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamScreenshots_v003, FakeSteamInterfaces::Screenshots())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamMusic_v001, FakeSteamInterfaces::Music())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamMusicRemote_v001, FakeSteamInterfaces::MusicRemote())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamHTTP_v003, FakeSteamInterfaces::HTTP())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerHTTP_v003, FakeSteamInterfaces::HTTP())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamInput_v001, FakeSteamInterfaces::Input())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamInput_v002, FakeSteamInterfaces::Input())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamInput_v005, FakeSteamInterfaces::Input())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamInput_v006, FakeSteamInterfaces::Input())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamController_v007, FakeSteamInterfaces::Controller())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamController_v008, FakeSteamInterfaces::Controller())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUGC_v014, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUGC_v015, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUGC_v016, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamUGC_v017, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerUGC_v014, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerUGC_v015, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerUGC_v016, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerUGC_v017, FakeSteamInterfaces::UGC())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamAppList_v001, FakeSteamInterfaces::AppList())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamHTMLSurface_v005, FakeSteamInterfaces::HTMLSurface())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamInventory_v003, FakeSteamInterfaces::Inventory())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerInventory_v003, FakeSteamInterfaces::Inventory())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamVideo_v002, FakeSteamInterfaces::Video())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamTV_v001, nullptr)
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamParentalSettings_v001, FakeSteamInterfaces::ParentalSettings())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamRemotePlay_v001, FakeSteamInterfaces::RemotePlay())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingMessages_v002, NS2Revived_SteamNetworkingMessages())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingMessages_SteamAPI_v002, NS2Revived_SteamNetworkingMessages())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingMessages_v002, NS2Revived_SteamNetworkingMessages())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002, NS2Revived_SteamNetworkingMessages())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingSockets_SteamAPI_v012, NS2Revived_SteamNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012, NS2Revived_SteamGameServerNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingSockets_SteamAPI_v011, NS2Revived_SteamNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v011, NS2Revived_SteamGameServerNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingSockets_SteamAPI_v009, NS2Revived_SteamNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v009, NS2Revived_SteamGameServerNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingSockets_v009, NS2Revived_SteamNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingSockets_v009, NS2Revived_SteamGameServerNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingSockets_v008, NS2Revived_SteamNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerNetworkingSockets_v008, NS2Revived_SteamGameServerNetworkingSockets())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingUtils_SteamAPI_v003, NS2Revived_SteamNetworkingUtils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingUtils_SteamAPI_v004, NS2Revived_SteamNetworkingUtils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamNetworkingUtils_v003, NS2Revived_SteamNetworkingUtils())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServer_v013, FakeSteamCore::GameServer())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServer_v014, FakeSteamCore::GameServer())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServer_v015, FakeSteamCore::GameServer())
+EXPORT_STEAM_ACCESSOR(SteamAPI_SteamGameServerStats_v001, FakeSteamCore::GameServerStats())
+
+#undef EXPORT_STEAM_ACCESSOR
+
 extern "C" __declspec(dllexport)
 bool __cdecl SteamGameServer_Init(
     uint32_t ip,
@@ -221,28 +255,29 @@ bool __cdecl SteamGameServer_Init(
     int serverMode,
     const char* versionString)
 {
-    typedef bool(__cdecl* Fn)(uint32_t, uint16_t, uint16_t, uint16_t, int, const char*);
-    RESOLVE_STEAM_EXPORT(SteamGameServer_Init, Fn);
-    return fn ? fn(ip, steamPort, gamePort, queryPort, serverMode, versionString) : false;
+    NSR_UNUSED(ip);
+    NSR_UNUSED(steamPort);
+    NSR_UNUSED(gamePort);
+    NSR_UNUSED(queryPort);
+    NSR_UNUSED(serverMode);
+    NSR_UNUSED(versionString);
+    Logger::Info("SteamGameServer_Init: offline emulation success");
+    return true;
 }
 
-FORWARD_VOID(SteamGameServer_Shutdown)
-FORWARD_VOID(SteamGameServer_RunCallbacks)
+extern "C" __declspec(dllexport) void __cdecl SteamGameServer_Shutdown() {}
+extern "C" __declspec(dllexport) void __cdecl SteamGameServer_RunCallbacks() { SteamCallbackManager::RunCallbacks(); }
 
 extern "C" __declspec(dllexport)
 void* __cdecl SteamGameServer()
 {
-    typedef void* (__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamGameServer, Fn);
-    return fn ? fn() : nullptr;
+    return FakeSteamCore::GameServer();
 }
 
 extern "C" __declspec(dllexport)
 void* __cdecl SteamGameServerStats()
 {
-    typedef void* (__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamGameServerStats, Fn);
-    return fn ? fn() : nullptr;
+    return FakeSteamCore::GameServerStats();
 }
 
 extern "C" __declspec(dllexport) void* __cdecl SteamGameServerNetworking() { return NS2Revived_SteamGameServerNetworking(); }
@@ -251,64 +286,49 @@ extern "C" __declspec(dllexport) void* __cdecl SteamGameServerNetworkingSockets(
 extern "C" __declspec(dllexport)
 void* __cdecl SteamInternal_CreateInterface(const char* version)
 {
-    typedef void* (__cdecl* Fn)(const char*);
-    RESOLVE_STEAM_EXPORT(SteamInternal_CreateInterface, Fn);
-
     void* routed = SteamInterfaceRouter::RouteCreateInterface(version);
     if (routed)
         return routed;
 
-    return fn ? fn(version) : nullptr;
+    return nullptr;
 }
 
 extern "C" __declspec(dllexport)
 void* __cdecl SteamInternal_FindOrCreateUserInterface(HSteamUser user, const char* version)
 {
-    typedef void* (__cdecl* Fn)(HSteamUser, const char*);
-    RESOLVE_STEAM_EXPORT(SteamInternal_FindOrCreateUserInterface, Fn);
-
     void* routed = SteamInterfaceRouter::RouteUserInterface(user, version);
     if (routed)
         return routed;
 
-    return fn ? fn(user, version) : nullptr;
+    return nullptr;
 }
 
 extern "C" __declspec(dllexport)
 void* __cdecl SteamInternal_FindOrCreateGameServerInterface(HSteamUser user, const char* version)
 {
-    typedef void* (__cdecl* Fn)(HSteamUser, const char*);
-    RESOLVE_STEAM_EXPORT(SteamInternal_FindOrCreateGameServerInterface, Fn);
-
     void* routed = SteamInterfaceRouter::RouteGameServerInterface(user, version);
     if (routed)
         return routed;
 
-    return fn ? fn(user, version) : nullptr;
+    return nullptr;
 }
 
 extern "C" __declspec(dllexport)
 void* __cdecl SteamInternal_ContextInit(void* context)
 {
-    typedef void* (__cdecl* Fn)(void*);
-    RESOLVE_STEAM_EXPORT(SteamInternal_ContextInit, Fn);
-    return fn ? fn(context) : nullptr;
+    return context;
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl SteamInternal_GameServer_Init()
 {
-    typedef void(__cdecl* Fn)();
-    RESOLVE_STEAM_EXPORT(SteamInternal_GameServer_Init, Fn);
-    if (fn) fn();
+    Logger::Info("SteamInternal_GameServer_Init: offline emulation");
 }
 
 extern "C" __declspec(dllexport)
 void __cdecl Breakpad_SteamWriteMiniDumpSetComment(const char* comment)
 {
-    typedef void(__cdecl* Fn)(const char*);
-    RESOLVE_STEAM_EXPORT(Breakpad_SteamWriteMiniDumpSetComment, Fn);
-    if (fn) fn(comment);
+    NSR_UNUSED(comment);
 }
 
 extern "C" __declspec(dllexport)
@@ -321,7 +341,11 @@ void __cdecl Breakpad_SteamMiniDumpInit(
     void* context,
     void* callback)
 {
-    typedef void(__cdecl* Fn)(uint32_t, const char*, const char*, const char*, bool, void*, void*);
-    RESOLVE_STEAM_EXPORT(Breakpad_SteamMiniDumpInit, Fn);
-    if (fn) fn(appId, version, date, time, fullMemoryDumps, context, callback);
+    NSR_UNUSED(appId);
+    NSR_UNUSED(version);
+    NSR_UNUSED(date);
+    NSR_UNUSED(time);
+    NSR_UNUSED(fullMemoryDumps);
+    NSR_UNUSED(context);
+    NSR_UNUSED(callback);
 }

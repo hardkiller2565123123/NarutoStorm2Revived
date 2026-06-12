@@ -32,15 +32,14 @@ public:
     {
         NSR_UNUSED(flags);
         Logger::Info("SteamFriends::GetFriendCount");
-        return 0;
+        return SteamPersonaManager::GetFriendCount();
     }
 
     virtual CSteamID GetFriendByIndex(int index, int flags)
     {
-        NSR_UNUSED(index);
         NSR_UNUSED(flags);
         Logger::Info("SteamFriends::GetFriendByIndex");
-        return 0;
+        return SteamPersonaManager::GetFriendByIndex(index);
     }
 
     virtual int GetFriendRelationship(CSteamID id)
@@ -54,14 +53,13 @@ public:
     {
         NSR_UNUSED(id);
         Logger::Info("SteamFriends::GetFriendPersonaState");
-        return 0;
+        return 1;
     }
 
     virtual const char* GetFriendPersonaName(CSteamID id)
     {
-        NSR_UNUSED(id);
         Logger::Info("SteamFriends::GetFriendPersonaName");
-        return "";
+        return SteamPersonaManager::GetFriendPersonaName(id);
     }
 
     virtual bool GetFriendGamePlayed(CSteamID id, void* info)
@@ -138,9 +136,14 @@ public:
 
     virtual bool HasFriend(CSteamID id, int flags)
     {
-        NSR_UNUSED(id);
         NSR_UNUSED(flags);
         Logger::Info("SteamFriends::HasFriend");
+        for (int i = 0; i < SteamPersonaManager::GetFriendCount(); ++i)
+        {
+            if (SteamPersonaManager::GetFriendByIndex(i) == id)
+                return true;
+        }
+
         return false;
     }
 
@@ -354,15 +357,14 @@ public:
     {
         NSR_UNUSED(id);
         Logger::Info("SteamFriends::GetFriendRichPresenceKeyCount");
-        return 0;
+        return SteamPersonaManager::GetRichPresenceKeyCount();
     }
 
     virtual const char* GetFriendRichPresenceKeyByIndex(CSteamID id, int index)
     {
         NSR_UNUSED(id);
-        NSR_UNUSED(index);
         Logger::Info("SteamFriends::GetFriendRichPresenceKeyByIndex");
-        return "";
+        return SteamPersonaManager::GetRichPresenceKeyByIndex(index);
     }
 
     virtual void RequestFriendRichPresence(CSteamID id)
